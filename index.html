@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ra Money Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>💰 Ra’s Money Tracker</h1>
+
+<div class="form">
+    <input type="date" id="date">
+    <select id="type">
+        <option>Income</option>
+        <option>Expense</option>
+    </select>
+    <input type="text" id="category" placeholder="Category">
+    <input type="number" id="amount" placeholder="Amount">
+    <button onclick="addEntry()">Add</button>
+</div>
+
+<table>
+<thead>
+<tr><th>Date</th><th>Type</th><th>Category</th><th>Amount</th></tr>
+</thead>
+<tbody id="tableBody"></tbody>
+</table>
+
+<div class="summary">
+<h3>Monthly Summary</h3>
+<p>Total Income: ₹<span id="income">0</span></p>
+<p>Total Expense: ₹<span id="expense">0</span></p>
+<p>Total Savings: ₹<span id="savings">0</span></p>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
