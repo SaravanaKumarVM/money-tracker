@@ -1,3 +1,8 @@
+function toggleTable() {
+    let box = document.getElementById("tableBox");
+    box.style.display = box.style.display === "none" ? "block" : "none";
+}
+
 let data = JSON.parse(localStorage.getItem("moneyData")) || [];
 
 function addEntry() {
