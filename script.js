@@ -26,17 +26,28 @@ const others=document.getElementById("others");
 
 const othList=document.getElementById("othList");
 
+function parseDate(d){
+  if(d.includes("-")){
+    const parts = d.split("-");
+    if(parts[0].length===4) return new Date(d);         // YYYY-MM-DD
+    return new Date(`${parts[2]}-${parts[1]}-${parts[0]}`); // DD-MM-YYYY
+  }
+  return new Date(d);
+}
+
 
 function save(){
   localStorage.setItem("moneyData",JSON.stringify(data));
 }
 
 function getMonthKey(d){
-  return new Date(d)
-    .toLocaleString('en',{month:'short',year:'numeric'})
-    .replace(/\s/g,"")
-    .toUpperCase();
+  const dt = parseDate(d);
+  if(isNaN(dt)) return "INVALID";
+  return dt.toLocaleString('en',{month:'short',year:'numeric'})
+           .replace(/\s/g,"")
+           .toUpperCase();
 }
+
 
 function buildMonth(){
   let prev = monthFilter.value || "ALL";
