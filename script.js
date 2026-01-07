@@ -75,12 +75,14 @@ function addEntry() {
   renderTable();
 }
 
-function deleteEntry(i) {
-  data.splice(i, 1);
+function deleteEntry(i){
+  if(!confirm("Delete this entry?")) return;
+  data.splice(i,1);
   save();
   buildMonth();
   renderTable();
 }
+
 
 function clearAll() {
   if (!confirm("Clear entire ledger?")) return;
