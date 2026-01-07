@@ -129,9 +129,17 @@ function exportData(){
 }
 
 function mailReport(){
-  exportData();
-  window.open("mailto:saravanamrkpm@gmail.com?subject=Ra Money Tracker Report&body=Attached is my monthly finance report.","_blank");
+  exportData();  // downloads the CSV first
+
+  const subject = encodeURIComponent("Ra Money Tracker Monthly Report");
+  const body = encodeURIComponent(
+    "Hi,\n\nI have attached my monthly finance report.\n\nRegards,\nRa"
+  );
+
+  window.location.href =
+    `mailto:saravanamrkpm@gmail.com?subject=${subject}&body=${body}`;
 }
+
 
 /* ---------- Import ---------- */
 function importBackup(file) {
