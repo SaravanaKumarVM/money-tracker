@@ -98,22 +98,39 @@ function toggleTable() {
 }
 
 /* ---------- Export ---------- */
-function exportData() {
+function exportData(){
   const sel = monthFilter.value;
-  const filtered = data.filter(
-    (e) => sel === "ALL" || getMonthKey(e.date) === sel
-  );
+  const filtered = data.filter(e => sel==="ALL" || getMonthKey(e.date)===sel);
 
-  let csv = "Date,Type,Description,Amount\n";
-  filtered.forEach((e) => {
+  let csv = `SUMMARY - ${sel}\n`;
+  csv += `Total Income,${incomeSpan.innerText}\n`;
+  csv += `Total Expense,${expenseSpan.innerText}\n`;
+  csv += `Remaining,${remainingSpan.innerText}\n\n`;
+
+  csv += `Bank Wise\n`;
+  csv += `ICICI,${icici.innerText}\nAXIS,${axis.innerText}\nHDFC,${hdfc.innerText}\n\n`;
+
+  csv += `Ownership Wise\n`;
+  csv += `PARTY,${party.innerText}\nOWN,${own.innerText}\nHOME,${home.innerText}\nVMD,${vmd.innerText}\n\n`;
+
+  csv += `Fixed Commitments\n`;
+  csv += `LOAN,${loan.innerText}\nRENT,${rent.innerText}\nSIP,${sip.innerText}\nOTHERS,${others.innerText}\n\n`;
+
+  csv += `Date,Type,Description,Amount\n`;
+  filtered.forEach(e=>{
     csv += `${e.date},${e.type},"${e.desc}",${e.amt}\n`;
   });
 
-  const blob = new Blob([csv], { type: "text/csv" });
+  const blob = new Blob([csv],{type:"text/csv"});
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
   a.download = `ra_money_${sel}.csv`;
   a.click();
+}
+
+function mailReport(){
+  exportData();
+  window.open("mailto:saravanamrkpm@gmail.com?subject=Ra Money Tracker Report&body=Attached is my monthly finance report.","_blank");
 }
 
 /* ---------- Import ---------- */
