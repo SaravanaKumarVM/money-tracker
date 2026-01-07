@@ -1,151 +1,25 @@
-body{
-  font-family:'Segoe UI',Arial,sans-serif;
-  background:linear-gradient(120deg,#e0f2fe,#f5f7fa);
-  padding:20px;
-  color:#1f2937;
-  position:relative;
-}
-
-/* Soft background image layer */
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:url("https://images.unsplash.com/photo-1523285367489-d38aec03b1bb?auto=format&fit=crop&w=1400&q=60");
-  background-size:cover;
-  background-position:center;
-  opacity:.12;
-  z-index:-1;
-}
-
-.app-container{
-  max-width:1400px;
-  margin:0 auto;
-  width:100%;
-}
-
-/* Header */
-h2{
-  font-size:30px;
-  font-weight:700;
-  letter-spacing:.6px;
-  margin-bottom:15px;
-  background:linear-gradient(135deg,#2563eb,#22c55e);
-  -webkit-background-clip:text;
-  color:transparent;
-}
-
-/* Inputs */
-.form input,.form select{
-  padding:9px;
-  border-radius:10px;
-  border:1px solid #dbeafe;
-  margin:4px;
-  background:rgba(255,255,255,.85);
-}
-
-/* Buttons */
-button{
-  padding:9px 18px;
-  border:none;
-  border-radius:12px;
-  background:linear-gradient(135deg,#2563eb,#1d4ed8);
-  color:#fff;
-  cursor:pointer;
-  font-weight:600;
-  box-shadow:0 6px 16px rgba(37,99,235,.35);
-  transition:.2s ease;
-}
-button:hover{transform:translateY(-1px);opacity:.95;}
-button:active{transform:scale(.96);}
-
-/* Toolbar */
-.toolbar{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  align-items:center;
-  margin-bottom:12px;
-}
-
-/* Summary */
-.summary{
-  background:rgba(255,255,255,.75);
-  backdrop-filter:blur(12px);
-  border-radius:20px;
-  padding:18px;
-  box-shadow:0 12px 28px rgba(0,0,0,.12);
-}
-
-.summary p{font-size:15px;margin:6px 0;}
-
-.summary span{
-  background:linear-gradient(135deg,#2563eb,#22c55e);
-  color:#fff;
-  padding:3px 10px;
-  border-radius:14px;
-  font-weight:700;
-}
-
-/* Dashboard */
+/* ---------- DASHBOARD LAYOUT ---------- */
 .dashboard{
-  display:flex;
-  width:100%;
+  display:grid;
+  grid-template-columns: 1fr 1.6fr;
   gap:22px;
-}
-
-.left-panel{width:38%;}
-
-#tableBox{
-  width:62%;
-  background:rgba(255,255,255,.75);
-  backdrop-filter:blur(12px);
-  border-radius:20px;
-  padding:10px;
-  box-shadow:0 12px 28px rgba(0,0,0,.12);
-}
-
-#tableBox table{
   width:100%;
-  border-collapse:separate;
-  border-spacing:0 10px;
 }
 
-/* Table */
-thead th{
-  background:#e0f2fe;
-  padding:12px;
-  border:none;
-  border-radius:10px;
+/* Desktop table scroll */
+#tableBox{
+  max-height:78vh;
+  overflow-y:auto;
 }
 
-tbody tr{
-  background:#f8fafc;
-  border-radius:14px;
-  box-shadow:0 6px 16px rgba(0,0,0,.06);
-}
-
-tbody tr td{
-  padding:12px;
-  border:none;
-}
-
-tbody tr:hover{background:#e0f2fe;}
-
-td button{
-  background:linear-gradient(135deg,#fb7185,#e11d48);
-  box-shadow:0 6px 14px rgba(225,29,72,.35);
-}
-td button:hover{transform:scale(1.1) rotate(5deg);}
-
-/* Mobile */
-/* ================= MOBILE FIRST FIX ================= */
+/* ---------- MOBILE FIRST FIX ---------- */
 @media(max-width:768px){
 
   body{
     padding:12px;
   }
 
+  /* Input grid */
   .form{
     display:grid;
     grid-template-columns:1fr 1fr;
@@ -162,44 +36,49 @@ td button:hover{transform:scale(1.1) rotate(5deg);}
     width:100%;
   }
 
+  /* Toolbar alignment */
   .toolbar{
     justify-content:space-between;
   }
 
-  /* Force stacking */
+  /* STACK EVERYTHING */
   .dashboard{
-    display:flex;
-    flex-direction:column;
+    grid-template-columns:1fr;
   }
 
-  .left-panel{
-    width:100% !important;
-  }
-
+  .left-panel,
   #tableBox{
-    width:100% !important;
-    margin-top:14px;
-    max-height:45vh;
-    overflow-y:auto;
-    -webkit-overflow-scrolling:touch;
+    width:100%;
+  }
+
+  /* TABLE FULL WIDTH MOBILE */
+  #tableBox{
+    margin-top:16px;
+    max-height:none;
+    overflow:visible;
   }
 
   #tableBox table{
-    min-width:600px;
+    width:100%;
+    min-width:unset;   /* 🔥 THIS FIXES YOUR EMPTY SCREEN BUG */
+  }
+
+  thead th,
+  tbody td{
+    font-size:13px;
+    padding:8px;
   }
 }
 
+/* ---------- DESKTOP ONLY ---------- */
 @media(min-width:769px){
+
   .dashboard{
-    display:flex;
-    flex-direction:row;
+    grid-template-columns: 38% 62%;
   }
 
-  .left-panel{ width:38%; }
-  #tableBox{ width:62%; max-height:80vh; overflow:auto; }
+  #tableBox{
+    max-height:80vh;
+    overflow:auto;
+  }
 }
-
-
-
-
-
