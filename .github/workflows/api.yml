@@ -1,0 +1,21 @@
+name: Money API
+
+on:
+  workflow_dispatch:
+  repository_dispatch:
+
+jobs:
+  save:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Update Data
+        run: |
+          echo '${{ github.event.client_payload.data }}' > moneyData.json
+      - name: Commit file
+        run: |
+          git config user.name "money-bot"
+          git config user.email "money@tracker.com"
+          git add moneyData.json
+          git commit -m "Update ledger"
+          git push
