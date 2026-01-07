@@ -71,9 +71,14 @@ function addEntry() {
   });
 
   // 🔥 Clear fields after add
-  category.value = "";
-  amount.value = "";
-  category.focus();
+  setTimeout(()=>{
+    category.value = "";
+    amount.value = "";
+    date.blur();
+    category.blur();
+    amount.blur();
+  }, 0);
+
 
   save();
   buildMonth();
