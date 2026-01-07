@@ -19,8 +19,9 @@
     <button onclick="addEntry()">Add</button>
 </div>
 
-<button type="button" onclick="exportBackup()">Export Backup</button>
-<input type="file" id="importFile" onchange="importBackup(this.files[0])">
+<button onclick="exportBackup()">Export Backup</button>
+<input type="file" onchange="importBackup(this.files[0])">
+
 
 <br><br>
 <label>Select Month:</label>
