@@ -63,17 +63,28 @@ function toggleTable(){
 }
 
 function exportData(){
-  let sel=monthFilter.value;
-  let f=data.filter(e=>{
-    let m=new Date(e.date).toLocaleString('en',{month:'short',year:'numeric'}).replace(" ","");
-    return sel==="ALL"||m===sel;
+  let sel = monthFilter.value;
+
+  let filtered = data.filter(e=>{
+    let m = new Date(e.date)
+      .toLocaleString('en',{month:'short',year:'numeric'})
+      .replace(" ","");
+    return sel==="ALL" || m===sel;
   });
-  let b=new Blob([JSON.stringify(f,null,2)],{type:"application/json"});
-  let a=document.createElement("a");
-  a.href=URL.createObjectURL(b);
-  a.download=`ra_money_${sel}.json`;
+
+  let csv = "Date,Type,Description,Amount\n";
+
+  filtered.forEach(e=>{
+    csv += `${e.date},${e.type},"${e.desc}",${e.amt}\n`;
+  });
+
+  const blob = new Blob([csv],{type:"text/csv"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `ra_money_${sel}.csv`;
   a.click();
 }
+
 
 function importBackup(file){
   let r=new FileReader();
