@@ -163,3 +163,31 @@ td button{
     min-width:600px;
   }
 }
+
+/* FORCE MOBILE MODE */
+@media screen and (max-width: 820px){
+
+  .dashboard{
+    flex-direction:column !important;
+  }
+
+  .left-panel{
+    width:100% !important;
+  }
+
+  #tableBox{
+    width:100% !important;
+    max-height:45vh !important;
+    overflow-y:auto !important;
+    -webkit-overflow-scrolling:touch;
+  }
+
+  #tableBox table{
+    min-width:650px;
+  }
+
+  body{
+    padding:10px;
+  }
+}
+
