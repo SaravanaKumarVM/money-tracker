@@ -140,6 +140,32 @@ td button:hover{transform:scale(1.1) rotate(5deg);}
 
 /* Mobile */
 @media(max-width:900px){
-  .dashboard{flex-direction:column;}
-  .left-panel,#tableBox{width:100%;}
+
+  body{
+    padding-bottom:120px;
+  }
+
+  #tableBox{
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    width:100%;
+    max-height:42vh;
+    overflow:auto;
+    border-radius:20px 20px 0 0;
+    background:rgba(255,255,255,.95);
+    box-shadow:0 -12px 25px rgba(0,0,0,.18);
+    padding:12px;
+    z-index:999;
+  }
+
+  .dashboard{
+    flex-direction:column;
+  }
+
+  .left-panel{
+    width:100%;
+  }
 }
+
