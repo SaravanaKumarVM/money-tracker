@@ -1,84 +1,165 @@
-/* ---------- DASHBOARD LAYOUT ---------- */
-.dashboard{
+*{
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Segoe UI',Arial,sans-serif;
+  background:linear-gradient(120deg,#e0f2fe,#f5f7fa);
+  margin:0;
+  padding:14px;
+  color:#1f2937;
+}
+
+/* Glass Background */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:url("https://images.unsplash.com/photo-1523285367489-d38aec03b1bb?auto=format&fit=crop&w=1400&q=60");
+  background-size:cover;
+  background-position:center;
+  opacity:.12;
+  z-index:-1;
+}
+
+.app-container{
+  max-width:1400px;
+  margin:0 auto;
+}
+
+/* Header */
+h2{
+  font-size:26px;
+  font-weight:700;
+  margin-bottom:10px;
+  background:linear-gradient(135deg,#2563eb,#22c55e);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+/* Inputs */
+.form{
+  background:rgba(255,255,255,.7);
+  backdrop-filter:blur(10px);
+  border-radius:16px;
+  padding:10px;
   display:grid;
-  grid-template-columns: 1fr 1.6fr;
-  gap:22px;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+.form input,.form select{
+  padding:10px;
+  border-radius:10px;
+  border:1px solid #dbeafe;
+}
+
+.form button{
+  grid-column:1/-1;
+}
+
+/* Buttons */
+button{
+  padding:10px;
+  border:none;
+  border-radius:14px;
+  background:linear-gradient(135deg,#2563eb,#1d4ed8);
+  color:#fff;
+  font-weight:600;
+  box-shadow:0 6px 14px rgba(37,99,235,.35);
+}
+
+/* Toolbar */
+.toolbar{
+  margin:10px 0;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+/* Dashboard Layout */
+.dashboard{
+  display:flex;
+  gap:16px;
   width:100%;
 }
 
-/* Desktop table scroll */
-#tableBox{
-  max-height:78vh;
-  overflow-y:auto;
+/* Summary Panel */
+.left-panel{
+  flex:0 0 360px;
 }
 
-/* ---------- MOBILE FIRST FIX ---------- */
+.summary{
+  background:rgba(255,255,255,.75);
+  backdrop-filter:blur(12px);
+  border-radius:18px;
+  padding:14px;
+  box-shadow:0 10px 24px rgba(0,0,0,.12);
+}
+
+.summary span{
+  background:linear-gradient(135deg,#2563eb,#22c55e);
+  color:#fff;
+  padding:3px 10px;
+  border-radius:12px;
+  font-weight:700;
+}
+
+/* Table */
+#tableBox{
+  flex:1;
+  background:rgba(255,255,255,.75);
+  backdrop-filter:blur(12px);
+  border-radius:18px;
+  padding:10px;
+  box-shadow:0 10px 24px rgba(0,0,0,.12);
+  max-height:75vh;
+  overflow:auto;
+}
+
+#tableBox table{
+  width:100%;
+  border-spacing:0 8px;
+}
+
+thead th{
+  background:#e0f2fe;
+  padding:10px;
+  border-radius:12px;
+}
+
+tbody tr{
+  background:#f8fafc;
+  border-radius:14px;
+}
+
+tbody td{
+  padding:10px;
+}
+
+td button{
+  background:linear-gradient(135deg,#fb7185,#e11d48);
+}
+
+/* 🔥 MOBILE FIX */
 @media(max-width:768px){
 
-  body{
-    padding:12px;
-  }
-
-  /* Input grid */
-  .form{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:8px;
-  }
-
-  .form input,
-  .form select{
-    width:100%;
-  }
-
-  .form button{
-    grid-column:1 / -1;
-    width:100%;
-  }
-
-  /* Toolbar alignment */
-  .toolbar{
-    justify-content:space-between;
-  }
-
-  /* STACK EVERYTHING */
   .dashboard{
-    grid-template-columns:1fr;
+    flex-direction:column;
   }
 
-  .left-panel,
+  .left-panel{
+    width:100%;
+    flex:none;
+  }
+
   #tableBox{
     width:100%;
-  }
-
-  /* TABLE FULL WIDTH MOBILE */
-  #tableBox{
-    margin-top:16px;
-    max-height:none;
-    overflow:visible;
+    max-height:50vh;
+    overflow-x:auto;
   }
 
   #tableBox table{
-    width:100%;
-    min-width:unset;   /* 🔥 THIS FIXES YOUR EMPTY SCREEN BUG */
-  }
-
-  thead th,
-  tbody td{
-    font-size:13px;
-    padding:8px;
-  }
-}
-
-/* ---------- DESKTOP ONLY ---------- */
-@media(min-width:769px){
-
-  .dashboard{
-    grid-template-columns: 38% 62%;
-  }
-
-  #tableBox{
-    max-height:80vh;
-    overflow:auto;
+    min-width:600px;
   }
 }
