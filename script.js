@@ -31,6 +31,22 @@ function save(){
   localStorage.setItem("moneyData",JSON.stringify(data));
 }
 
+function getMonthKey(d){
+  return new Date(d)
+    .toLocaleString('en',{month:'short',year:'numeric'})
+    .replace(/\s/g,"")
+    .toUpperCase();
+}
+
+function buildMonth(){
+  let months=[...new Set(data.map(e=>getMonthKey(e.date)))];
+  monthFilter.innerHTML="<option value='ALL'>ALL</option>";
+  months.forEach(m=>{
+    monthFilter.innerHTML+=`<option value="${m}">${m}</option>`;
+  });
+}
+
+
 function addEntry(){
   if(!date.value || !amount.value) return alert("Enter date & amount");
   data.push({
@@ -115,8 +131,9 @@ function renderTable(){
   let sel=monthFilter.value;
 
   data.forEach((e,i)=>{
-    let m=new Date(e.date).toLocaleString('en',{month:'short',year:'numeric'}).replace(" ","");
-    if(sel!=="ALL"&&sel!==m) return;
+
+    let m=getMonthKey(e.date);
+    if(sel!=="ALL" && sel!==m) return;
 
     tableBody.innerHTML+=
       `<tr>
