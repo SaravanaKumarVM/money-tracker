@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<h2>💰 Ra Money Tracker</h2>
+<h2>💰 Ra’s Money Tracker</h2>
 
 <div class="form">
   <input type="date" id="date">
@@ -20,25 +20,29 @@
 </div>
 
 <div class="toolbar">
+  <label>Month:</label>
+  <select id="monthFilter" onchange="renderTable()"></select>
   <button onclick="toggleTable()">Show / Hide</button>
   <button onclick="exportData()">Export</button>
   <button onclick="clearAll()">Clear</button>
-  <select id="monthFilter" onchange="renderTable()"></select>
+  <input type="file" onchange="importBackup(this.files[0])">
 </div>
 
 <div id="tableBox">
 <table>
 <thead>
-<tr><th>Date</th><th>Type</th><th>Description</th><th>Amount</th><th>❌</th></tr>
+<tr>
+  <th>Date</th><th>Type</th><th>Description</th><th>Amount</th><th>❌</th>
+</tr>
 </thead>
 <tbody id="tableBody"></tbody>
 </table>
 </div>
 
 <div class="summary">
-<p>Total Income: ₹<span id="incomeSpan">0</span></p>
-<p>Total Expense: ₹<span id="expenseSpan">0</span></p>
-<p>Remaining: ₹<span id="remainingSpan">0</span></p>
+  <p>Total Income: ₹<span id="incomeSpan">0</span></p>
+  <p>Total Expense: ₹<span id="expenseSpan">0</span></p>
+  <p>Remaining: ₹<span id="remainingSpan">0</span></p>
 </div>
 
 <script src="script.js"></script>
