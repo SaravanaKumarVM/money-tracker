@@ -43,13 +43,26 @@ function addEntry() {
     renderTable();
 }
 
-function exportBackup(){
-    let blob = new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
-    let a=document.createElement("a");
-    a.href=URL.createObjectURL(blob);
-    a.download="ra_money_backup.json";
+function exportBackup() {
+    if (!data || data.length === 0) {
+        alert("No data to export!");
+        return;
+    }
+
+    const json = JSON.stringify(data, null, 2);
+    const blob = new Blob([json], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "ra_money_backup.json";
+    document.body.appendChild(a);
     a.click();
+
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
 }
+
 
 function importBackup(file){
     let r=new FileReader();
