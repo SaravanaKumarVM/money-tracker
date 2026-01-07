@@ -129,7 +129,7 @@ function exportData(){
 }
 
 function mailReport(){
-  exportData();  // downloads the CSV first
+  //exportData();  // downloads the CSV first
 
   const subject = encodeURIComponent("Ra Money Tracker Monthly Report");
   const body = encodeURIComponent(
