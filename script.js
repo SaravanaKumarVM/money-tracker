@@ -202,14 +202,16 @@ function renderTable() {
 
     exp += e.amt;
     const w = e.desc.toUpperCase().split(" ");
-
-    Object.keys(bank).forEach((k) => w.includes(k) && (bank[k] += e.amt));
-    Object.keys(owner).forEach((k) => w.includes(k) && (owner[k] += e.amt));
-    Object.keys(fixed).forEach((k) => w.includes(k) && (fixed[k] += e.amt));
-
+    
     if (w.includes("OTH")) {
+      // Only count in OTH – Friend Wise
       const n = w[w.indexOf("OTH") + 1] || "UNKNOWN";
       oth[n] = (oth[n] || 0) + e.amt;
+    } else {
+      // Normal categorization
+      Object.keys(bank).forEach(k => w.includes(k) && (bank[k] += e.amt));
+      Object.keys(owner).forEach(k => w.includes(k) && (owner[k] += e.amt));
+      Object.keys(fixed).forEach(k => w.includes(k) && (fixed[k] += e.amt));
     }
   });
 
