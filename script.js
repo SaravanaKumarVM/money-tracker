@@ -39,11 +39,16 @@ function getMonthKey(d){
 }
 
 function buildMonth(){
-  let months=[...new Set(data.map(e=>getMonthKey(e.date)))];
-  monthFilter.innerHTML="<option value='ALL'>ALL</option>";
+  let prev = monthFilter.value || "ALL";
+
+  let months = [...new Set(data.map(e => getMonthKey(e.date)))];
+
+  monthFilter.innerHTML = `<option value="ALL">ALL</option>`;
   months.forEach(m=>{
-    monthFilter.innerHTML+=`<option value="${m}">${m}</option>`;
+    monthFilter.innerHTML += `<option value="${m}">${m}</option>`;
   });
+
+  monthFilter.value = months.includes(prev) ? prev : "ALL";
 }
 
 
@@ -56,12 +61,14 @@ function addEntry(){
     amt:+amount.value
   });
   save();
+  buildMonth();
   renderTable();
 }
 
 function deleteEntry(i){
   data.splice(i,1);
   save();
+  buildMonth();
   renderTable();
 }
 
@@ -69,6 +76,7 @@ function clearAll(){
   if(confirm("Clear entire ledger?")){
     data=[];
     localStorage.removeItem("moneyData");
+    buildMonth();
     renderTable();
   }
 }
@@ -106,7 +114,9 @@ function importBackup(file){
   let r=new FileReader();
   r.onload=e=>{
     data=[...data,...JSON.parse(e.target.result)];
-    save(); renderTable();
+    save();
+    buildMonth();
+    renderTable();
   };
   r.readAsText(file);
 }
@@ -119,7 +129,7 @@ function buildMonth(){
 
 
 function renderTable(){
-  buildMonth();
+
   tableBody.innerHTML="";
 
   let inc=0,exp=0;
