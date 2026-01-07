@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Ra Money Tracker</title>
+    <title>VMS Money Tracker</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,11 +14,15 @@
         <option>Income</option>
         <option>Expense</option>
     </select>
-    <input type="text" id="category" placeholder="Description (ICICI HOME CHICKEN)">
+    <input type="text" id="category" placeholder="Description">
     <input type="number" id="amount" placeholder="Amount">
     <button onclick="addEntry()">Add</button>
 </div>
 
+<button onclick="exportData()">Export Backup</button>
+<input type="file" id="importFile" onchange="importData(event)">
+
+<br><br>
 <label>Select Month:</label>
 <select id="monthFilter" onchange="renderTable()"></select>
 
@@ -37,7 +41,7 @@
 <h3>Monthly Summary</h3>
 <p>Total Income: ₹<span id="incomeSpan">0</span></p>
 <p>Total Expense: ₹<span id="expenseSpan">0</span></p>
-<p>Total Savings: ₹<span id="savingsSpan">0</span></p>
+<p>Total Remaining: ₹<span id="remainingSpan">0</span></p>
 
 <h4>🏦 Bank Wise</h4>
 <p>ICICI: ₹<span id="icici">0</span> | AXIS: ₹<span id="axis">0</span> | HDFC: ₹<span id="hdfc">0</span></p>
