@@ -1,3 +1,30 @@
+const date = document.getElementById("date");
+const type = document.getElementById("type");
+const category = document.getElementById("category");
+const amount = document.getElementById("amount");
+const tableBody = document.getElementById("tableBody");
+const monthFilter = document.getElementById("monthFilter");
+
+const incomeSpan = document.getElementById("incomeSpan");
+const expenseSpan = document.getElementById("expenseSpan");
+const remainingSpan = document.getElementById("remainingSpan");
+
+const icici = document.getElementById("icici");
+const axis = document.getElementById("axis");
+const hdfc = document.getElementById("hdfc");
+
+const party = document.getElementById("party");
+const own = document.getElementById("own");
+const home = document.getElementById("home");
+const vmd = document.getElementById("vmd");
+
+const loan = document.getElementById("loan");
+const rent = document.getElementById("rent");
+const sip = document.getElementById("sip");
+const others = document.getElementById("others");
+
+const othList = document.getElementById("othList");
+
 let data = JSON.parse(localStorage.getItem("moneyData")) || [];
 
 function toggleTable() {
