@@ -142,7 +142,18 @@ td button:hover{transform:scale(1.1) rotate(5deg);}
 @media(max-width:900px){
 
   body{
-    padding-bottom:120px;
+    padding-bottom:45vh;
+  }
+
+  .form, .toolbar, .summary{
+    position:sticky;
+    top:0;
+    z-index:10;
+    background:rgba(240,248,255,.95);
+    backdrop-filter:blur(10px);
+    padding:10px;
+    border-radius:14px;
+    margin-bottom:8px;
   }
 
   #tableBox{
@@ -150,22 +161,15 @@ td button:hover{transform:scale(1.1) rotate(5deg);}
     bottom:0;
     left:0;
     right:0;
-    width:100%;
-    max-height:42vh;
+    max-height:45vh;
     overflow:auto;
+    background:rgba(255,255,255,.98);
+    backdrop-filter:blur(14px);
     border-radius:20px 20px 0 0;
-    background:rgba(255,255,255,.95);
-    box-shadow:0 -12px 25px rgba(0,0,0,.18);
     padding:12px;
-    z-index:999;
-  }
-
-  .dashboard{
-    flex-direction:column;
-  }
-
-  .left-panel{
-    width:100%;
+    box-shadow:0 -12px 30px rgba(0,0,0,.25);
+    z-index:20;
   }
 }
+
 
