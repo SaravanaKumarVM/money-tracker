@@ -1,12 +1,14 @@
 body{
-  font-family: 'Segoe UI', Arial, sans-serif;
-  background: linear-gradient(120deg,#e0f2fe,#f5f7fa);
+  font-family:'Segoe UI',Arial,sans-serif;
+  background:linear-gradient(120deg,#e0f2fe,#f5f7fa);
   padding:20px;
   color:#1f2937;
 }
 
 h2{
-  font-size:26px;
+  font-size:28px;
+  font-weight:700;
+  letter-spacing:.5px;
   margin-bottom:15px;
 }
 
@@ -33,8 +35,10 @@ button{
   color:#fff;
   cursor:pointer;
   font-weight:600;
+  box-shadow:0 6px 14px rgba(37,99,235,.25);
 }
 button:hover{opacity:.9;}
+button:active{transform:scale(.97);}
 
 .toolbar{
   display:flex;
@@ -53,67 +57,29 @@ button:hover{opacity:.9;}
   color:#2563eb;
 }
 
-.ledger-table table{
-  width:100%;
-  border-collapse:collapse;
-}
-
-th{
-  background:#f1f5f9;
-  padding:10px;
-  border-radius:8px;
-}
-
-td{
-  padding:10px;
-  border-bottom:1px solid #f1f1f1;
-}
-
-tr:hover{background:#f9fafb;}
-
-.section-title{
-  margin-top:10px;
-  font-weight:700;
-  color:#475569;
-}
-
-
-/* ---------- Header ---------- */
-h2{
-  font-size:28px;
-  font-weight:700;
-  letter-spacing:.5px;
-}
-
-/* ---------- Buttons ---------- */
-button{
-  box-shadow:0 6px 14px rgba(37,99,235,.25);
-}
-
-button:active{
-  transform:scale(.97);
-}
-
-/* ---------- Metric Card Glow ---------- */
-.metric-card{
-  box-shadow:0 10px 25px rgba(0,0,0,.12);
-}
-
-/* ---------- Section Separators ---------- */
 .section-title{
   border-left:4px solid #2563eb;
   padding-left:10px;
   margin-top:18px;
+  font-weight:700;
+  color:#475569;
 }
 
-/* ---------- Table Styling ---------- */
+.dashboard{
+  display:flex;
+  gap:20px;
+}
+
+/* Ledger table */
 .ledger-table table{
-  border-spacing:0 8px;
+  width:100%;
   border-collapse:separate;
+  border-spacing:0 8px;
 }
 
 .ledger-table thead th{
   background:#e0f2fe;
+  padding:10px;
   border:none;
 }
 
@@ -123,28 +89,56 @@ button:active{
 }
 
 .ledger-table tbody tr td{
+  padding:10px;
   border:none;
 }
 
-.ledger-table tbody tr td:first-child{
-  border-radius:10px 0 0 10px;
-}
-.ledger-table tbody tr td:last-child{
-  border-radius:0 10px 10px 0;
-}
+.ledger-table tbody tr td:first-child{border-radius:10px 0 0 10px;}
+.ledger-table tbody tr td:last-child{border-radius:0 10px 10px 0;}
 
-/* ---------- Delete Button ---------- */
+.ledger-table tbody tr:hover{background:#e0f2fe;}
+
 td button{
   background:linear-gradient(135deg,#fb7185,#e11d48);
   box-shadow:0 6px 12px rgba(225,29,72,.3);
 }
 
-/* ---------- Hover Effects ---------- */
+/* Metric cards */
+.metric-card{
+  padding:18px;
+  border-radius:14px;
+  color:#fff;
+  position:relative;
+  box-shadow:0 10px 25px rgba(0,0,0,.12);
+}
+
 .metric-card:hover{
   transform:translateY(-3px);
   transition:.2s ease;
 }
 
-.ledger-table tbody tr:hover{
-  background:#e0f2fe;
+.metric-icon{
+  font-size:26px;
+  position:absolute;
+  top:14px;
+  right:14px;
+  opacity:.3;
+}
+
+.metric-title{font-size:14px;opacity:.9;}
+.metric-value{font-size:28px;font-weight:700;margin-top:10px;}
+
+.income-card{background:linear-gradient(135deg,#22c55e,#16a34a);}
+.expense-card{background:linear-gradient(135deg,#ef4444,#b91c1c);}
+.remain-card{background:linear-gradient(135deg,#2563eb,#1d4ed8);}
+
+/* Responsive */
+@media(min-width:900px){
+  .left-panel{width:35%;}
+  #tableBox{width:65%;max-height:80vh;overflow:auto;}
+}
+
+@media(max-width:899px){
+  .dashboard{flex-direction:column;}
+  .left-panel,#tableBox{width:100%;}
 }
