@@ -70,10 +70,16 @@ function addEntry() {
     amt: +amount.value,
   });
 
+  // 🔥 Clear fields after add
+  category.value = "";
+  amount.value = "";
+  category.focus();
+
   save();
   buildMonth();
   renderTable();
 }
+
 
 function deleteEntry(i){
   if(!confirm("Delete this entry?")) return;
