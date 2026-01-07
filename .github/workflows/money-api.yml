@@ -1,0 +1,25 @@
+name: Money API
+
+on:
+  repository_dispatch:
+    types: [save_money]
+
+jobs:
+  save:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Write money data
+        run: |
+          echo '${{ github.event.client_payload.data }}' > moneyData.json
+
+      - name: Commit file
+        run: |
+          git config user.name "money-bot"
+          git config user.email "money@tracker.bot"
+          git add moneyData.json
+          git commit -m "Update money data"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.MONEY_TOKEN }}
