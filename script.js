@@ -10,6 +10,23 @@ const incomeSpan = document.getElementById("incomeSpan");
 const expenseSpan = document.getElementById("expenseSpan");
 const remainingSpan = document.getElementById("remainingSpan");
 
+const icici=document.getElementById("icici");
+const axis=document.getElementById("axis");
+const hdfc=document.getElementById("hdfc");
+
+const party=document.getElementById("party");
+const own=document.getElementById("own");
+const home=document.getElementById("home");
+const vmd=document.getElementById("vmd");
+
+const loan=document.getElementById("loan");
+const rent=document.getElementById("rent");
+const sip=document.getElementById("sip");
+const others=document.getElementById("others");
+
+const othList=document.getElementById("othList");
+
+
 function save(){
   localStorage.setItem("moneyData",JSON.stringify(data));
 }
@@ -73,10 +90,18 @@ function buildMonth(){
   m.forEach(x=>monthFilter.innerHTML+=`<option>${x}</option>`);
 }
 
+
 function renderTable(){
   buildMonth();
   tableBody.innerHTML="";
-  let inc=0,exp=0,sel=monthFilter.value;
+
+  let inc=0,exp=0;
+  let bank={ICICI:0,AXIS:0,HDFC:0};
+  let owner={PARTY:0,OWN:0,HOME:0,VMD:0};
+  let fixed={LOAN:0,RENT:0,SIP:0,OTHERS:0};
+  let oth={};
+
+  let sel=monthFilter.value;
 
   data.forEach((e,i)=>{
     let m=new Date(e.date).toLocaleString('en',{month:'short',year:'numeric'}).replace(" ","");
@@ -91,12 +116,35 @@ function renderTable(){
         <td><button onclick="deleteEntry(${i})">❌</button></td>
       </tr>`;
 
-    e.type==="Income"?inc+=e.amt:exp+=e.amt;
+    if(e.type==="Income"){inc+=e.amt;return;}
+
+    exp+=e.amt;
+    let w=e.desc.toUpperCase().split(" ");
+
+    Object.keys(bank).forEach(k=>{ if(w.includes(k)) bank[k]+=e.amt; });
+    Object.keys(owner).forEach(k=>{ if(w.includes(k)) owner[k]+=e.amt; });
+    Object.keys(fixed).forEach(k=>{ if(w.includes(k)) fixed[k]+=e.amt; });
+
+    if(w.includes("OTH")){
+      let i=w.indexOf("OTH");
+      let n=w[i+1]||"UNKNOWN";
+      oth[n]=(oth[n]||0)+e.amt;
+    }
   });
 
   incomeSpan.innerText=inc;
   expenseSpan.innerText=exp;
   remainingSpan.innerText=inc-exp;
+
+  icici.innerText=bank.ICICI; axis.innerText=bank.AXIS; hdfc.innerText=bank.HDFC;
+  party.innerText=owner.PARTY; own.innerText=owner.OWN; home.innerText=owner.HOME; vmd.innerText=owner.VMD;
+  loan.innerText=fixed.LOAN; rent.innerText=fixed.RENT; sip.innerText=fixed.SIP; others.innerText=fixed.OTHERS;
+
+  othList.innerHTML="";
+  Object.keys(oth).forEach(n=>{
+    othList.innerHTML+=`<li>${n}: ₹${oth[n]}</li>`;
+  });
 }
+
 
 renderTable();
