@@ -129,16 +129,33 @@ function exportData(){
 }
 
 function mailReport(){
-  //exportData();  // downloads the CSV first
 
-  const subject = encodeURIComponent("Ra Money Tracker Monthly Report");
-  const body = encodeURIComponent(
-    "Hi,\n\nI have attached my monthly finance report.\n\nRegards,\nRa"
-  );
+  let sel = monthFilter.value;
+
+  let body = `Saravana Money Tracker Report (${sel})\n\n`;
+
+  body += `Total Income: ₹${incomeSpan.innerText}\n`;
+  body += `Total Expense: ₹${expenseSpan.innerText}\n`;
+  body += `Remaining: ₹${remainingSpan.innerText}\n\n`;
+
+  body += `--- Bank Wise ---\n`;
+  body += `ICICI: ₹${icici.innerText}\nAXIS: ₹${axis.innerText}\nHDFC: ₹${hdfc.innerText}\n\n`;
+
+  body += `--- Ownership Wise ---\n`;
+  body += `PARTY: ₹${party.innerText}\nOWN: ₹${own.innerText}\nHOME: ₹${home.innerText}\nVMD: ₹${vmd.innerText}\n\n`;
+
+  body += `--- Fixed Commitments ---\n`;
+  body += `LOAN: ₹${loan.innerText}\nRENT: ₹${rent.innerText}\nSIP: ₹${sip.innerText}\nOTHERS: ₹${others.innerText}\n\n`;
+
+  body += `--- Ledger ---\n`;
+  document.querySelectorAll("#tableBody tr").forEach(r=>{
+    body += `${r.cells[0].innerText} | ${r.cells[1].innerText} | ${r.cells[2].innerText} | ₹${r.cells[3].innerText}\n`;
+  });
 
   window.location.href =
-    `mailto:saravanamrkpm@gmail.com?subject=${subject}&body=${body}`;
+    `mailto:saravanamrkpm@gmail.com?subject=Money Report ${sel}&body=${encodeURIComponent(body)}`;
 }
+
 
 
 /* ---------- Import ---------- */
