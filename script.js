@@ -185,7 +185,7 @@ function renderTable() {
 
   data.forEach((e, i) => {
     if (sel !== "ALL" && getMonthKey(e.date) !== sel) return;
-
+  
     tableBody.innerHTML += `
       <tr>
         <td>${e.date}</td>
@@ -194,26 +194,30 @@ function renderTable() {
         <td>₹${e.amt}</td>
         <td><button onclick="deleteEntry(${i})">❌</button></td>
       </tr>`;
-
+  
+    const w = e.desc.toUpperCase().split(" ");
+  
+    // ---------- INCOME ----------
     if (e.type === "Income") {
       inc += e.amt;
       return;
     }
-
-    exp += e.amt;
-    const w = e.desc.toUpperCase().split(" ");
-    
+  
+    // ---------- OTH FRIEND (STOP EVERYTHING ELSE) ----------
     if (w.includes("OTH")) {
-      // Only count in OTH – Friend Wise
       const n = w[w.indexOf("OTH") + 1] || "UNKNOWN";
       oth[n] = (oth[n] || 0) + e.amt;
-    } else {
-      // Normal categorization
-      Object.keys(bank).forEach(k => w.includes(k) && (bank[k] += e.amt));
-      Object.keys(owner).forEach(k => w.includes(k) && (owner[k] += e.amt));
-      Object.keys(fixed).forEach(k => w.includes(k) && (fixed[k] += e.amt));
+      return; // ⛔ Prevents Total Expense & other buckets
     }
+  
+    // ---------- NORMAL EXPENSE ----------
+    exp += e.amt;
+  
+    Object.keys(bank).forEach(k => w.includes(k) && (bank[k] += e.amt));
+    Object.keys(owner).forEach(k => w.includes(k) && (owner[k] += e.amt));
+    Object.keys(fixed).forEach(k => w.includes(k) && (fixed[k] += e.amt));
   });
+
 
   incomeSpan.innerText = inc;
   expenseSpan.innerText = exp;
