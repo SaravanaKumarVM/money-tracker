@@ -1,75 +1,61 @@
 <!DOCTYPE html>
 <html>
-   <head>
-      <title>VMS Money Tracker</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-      <link rel="stylesheet" href="style.css">
-   </head>
-   <body>
-      <div class="app-container">
-         <h2>💰 Saravana’s Money Tracker</h2>
-         <div class="form">
-            <input type="date" id="date">
-            <select id="type">
-               <option>Income</option>
-               <option>Expense</option>
-            </select>
-            <input id="category" placeholder="Description">
-            <input id="amount" type="number" placeholder="Amount">
-            <button onclick="addEntry()">Add</button>
-         </div>
-         <div class="toolbar">
-            <label>Month:</label>
-            <select id="monthFilter" onchange="renderTable()"></select>
-            <button onclick="toggleTable()">Show / Hide</button>
-            <button onclick="clearAll()">Clear</button>
-            <button onclick="exportData()">Export</button>
-            <button onclick="mailReport()">Send Mail</button>
-         </div>
-         <div class="dashboard">
-            <div class="left-panel">
-               <div class="summary">
-                  <p>Total Income: ₹<span id="incomeSpan">0</span></p>
-                  <p>Total Expense: ₹<span id="expenseSpan">0</span></p>
-                  <p>Remaining: ₹<span id="remainingSpan">0</span></p>
-                  <hr>
-                  <h3>🏦 Bank Wise</h3>
-                  <p>ICICI [18/05]: ₹<span id="icici">0</span> |
-                     HDFC [16/05]: ₹<span id="hdfc">0</span> |
-                     AXIS [23/10]: ₹<span id="axis">0</span> 
-                  </p>
-                  <h3>👤 Ownership Wise</h3>
-                  <p>PARTY: ₹<span id="party">0</span> |
-                     OWN: ₹<span id="own">0</span> |
-                     HOME: ₹<span id="home">0</span> |
-                     VMD: ₹<span id="vmd">0</span>
-                  </p>
-                  <h3>💳 Fixed Commitments</h3>
-                  <p>LOAN: ₹<span id="loan">0</span> |
-                     RENT: ₹<span id="rent">0</span> |
-                     SIP: ₹<span id="sip">0</span> |
-                     OTHERS: ₹<span id="others">0</span>
-                  </p>
-                  <h3>👥 OTH – Friend Wise</h3>
-                  <ul id="othList"></ul>
-               </div>
-            </div>
-            <div id="tableBox">
-               <table>
-                  <thead>
-                     <tr>
-                        <th>Date</th>
-                        <th>Type</th>
-                        <th>Description</th>
-                        <th>Amount</th>
-                        <th>❌</th>
-                     </tr>
-                  </thead>
-                  <tbody id="tableBody"></tbody>
-               </table>
-            </div>
-         </div>
-         <script src="script.js"></script>
+<head>
+  <title>VMS Money Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app-container">
+  <h2>💰 Saravana’s Money Tracker</h2>
+
+  <div class="form">
+    <input type="date" id="date">
+    <select id="type">
+      <option>Income</option>
+      <option>Expense</option>
+    </select>
+    <input id="category" placeholder="Description">
+    <input id="amount" type="number" placeholder="Amount">
+    <button onclick="addEntry()">Add</button>
+  </div>
+
+  <div class="toolbar">
+    <label>Month:</label>
+    <select id="monthFilter" onchange="renderTable()"></select>
+    <button id="toggleBtn" onclick="toggleTable()">Show</button>
+    <button onclick="clearAll()">Clear</button>
+    <button onclick="exportData()">Export</button>
+    <button onclick="mailReport()">Send Mail</button>
+  </div>
+
+  <div class="dashboard">
+    <div class="left-panel">
+      <div class="summary">
+        <p>Total Income: ₹<span id="incomeSpan">0</span></p>
+        <p>Total Expense: ₹<span id="expenseSpan">0</span></p>
+        <p>Remaining: ₹<span id="remainingSpan">0</span></p>
+        <hr>
+
+        <h3>🏦 Bank Wise</h3>
+        <p>ICICI: ₹<span id="icici">0</span> | HDFC: ₹<span id="hdfc">0</span> | AXIS: ₹<span id="axis">0</span></p>
+
+        <h3>👤 Ownership Wise</h3>
+        <p>PARTY: ₹<span id="party">0</span> | OWN: ₹<span id="own">0</span> |
+           HOME: ₹<span id="home">0</span> | VMD: ₹<span id="vmd">0</span></p>
+
+        <h3>💳 Fixed Commitments</h3>
+        <p>LOAN: ₹<span id="loan">0</span> | RENT: ₹<span id="rent">0</span> |
+           SIP: ₹<span id="sip">0</span> | OTHERS: ₹<span id="others">0</span></p>
+
+        <h3>👥 OTH – Friend Wise</h3>
+        <ul id="othList"></ul>
       </div>
-   </body>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
 </html>
