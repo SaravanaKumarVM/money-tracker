@@ -1,3 +1,5 @@
+const IS_LEDGER_TAB = location.pathname.includes("table.html");
+
 let data = [];
 
 const date = document.getElementById("date");
@@ -206,7 +208,7 @@ function renderTable() {
   let fixed = { LOAN: 0, RENT: 0, SIP: 0, OTHERS: 0 };
   let oth = {};
 
-  const sel = monthFilter.value;
+  const sel = IS_LEDGER_TAB ? "ALL" : monthFilter.value;
 
   data.forEach((e, i) => {
     if (sel !== "ALL" && getMonthKey(e.date) !== sel) return;
@@ -241,7 +243,9 @@ function renderTable() {
     Object.keys(bank).forEach(k => w.includes(k) && (bank[k] += e.amt));
     Object.keys(owner).forEach(k => w.includes(k) && (owner[k] += e.amt));
     Object.keys(fixed).forEach(k => w.includes(k) && (fixed[k] += e.amt));
-  } );
+  } 
+    if(IS_LEDGER_TAB) return;
+    );
 
 
   incomeSpan.innerText = inc;
