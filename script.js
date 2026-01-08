@@ -103,10 +103,22 @@ function clearAll() {
   renderTable();
 }
 
-function toggleTable() {
-  const t = document.getElementById("tableBox");
-  t.style.display = t.style.display === "none" ? "block" : "none";
+// function toggleTable() {
+//   const t = document.getElementById("tableBox");
+//   t.style.display = t.style.display === "none" ? "block" : "none";
+// }
+
+function toggleTable(){
+  const btn = document.getElementById("toggleBtn");
+
+  if(btn.innerText === "Show"){
+    window.open("table.html","_blank");
+    btn.innerText = "Hide";
+  }else{
+    btn.innerText = "Show";
+  }
 }
+
 
 /* ---------- Export ---------- */
 function exportData(){
@@ -183,6 +195,8 @@ function importBackup(file) {
 
 /* ---------- Render ---------- */
 function renderTable() {
+  if(!tableBody) return;
+
   tableBody.innerHTML = "";
 
   let inc = 0,
@@ -206,7 +220,7 @@ function renderTable() {
         <td><button onclick="deleteEntry(${i})">❌</button></td>
       </tr>`;
   
-    const w = e.desc.toUpperCase().split(" ");
+    const w = (e.desc || "").toUpperCase().split(" ");
   
     // ---------- INCOME ----------
     if (e.type === "Income") {
@@ -227,7 +241,7 @@ function renderTable() {
     Object.keys(bank).forEach(k => w.includes(k) && (bank[k] += e.amt));
     Object.keys(owner).forEach(k => w.includes(k) && (owner[k] += e.amt));
     Object.keys(fixed).forEach(k => w.includes(k) && (fixed[k] += e.amt));
-  });
+  } );
 
 
   incomeSpan.innerText = inc;
