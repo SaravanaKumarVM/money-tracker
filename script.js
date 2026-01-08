@@ -113,7 +113,7 @@ function toggleTable(){
 
   if(btn.innerText === "Show"){
     window.open("table.html","_blank");
-    btn.innerText = "Hide";
+    // btn.innerText = "Hide";
   }else{
     btn.innerText = "Show";
   }
