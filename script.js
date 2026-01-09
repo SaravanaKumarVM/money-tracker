@@ -19,6 +19,8 @@ const party=document.getElementById("party");
 const own=document.getElementById("own");
 const home=document.getElementById("home");
 const vmd=document.getElementById("vmd");
+const vmdd=document.getElementById("vmdd");
+const vml=document.getElementById("vml");
 
 const loan=document.getElementById("loan");
 const rent=document.getElementById("rent");
@@ -27,7 +29,6 @@ const others=document.getElementById("others");
 
 const othList=document.getElementById("othList");
 const cardTotalSpan=document.getElementById("cardTotal");
-const cardList=document.getElementById("cardList");
 
 const CARD_RULES={ICICI:{bill:18},HDFC:{bill:16},AXIS:{bill:23}};
 
@@ -72,7 +73,7 @@ function addEntry(){
     billMonth:bank?getCardBillMonth(date.value,bank):getMonthKey(date.value)
   });
 
-  setTimeout(()=>{category.value="";amount.value="";date.blur();category.blur();amount.blur();},0);
+  setTimeout(()=>{category.value="";amount.value="";},0);
 
   save();buildMonth();renderTable();
 }
@@ -88,7 +89,7 @@ function renderTable(){
   tableBody.innerHTML="";
   let inc=0,cardTotal=0,pocketTotal=0;
   let cardBills={ICICI:0,HDFC:0,AXIS:0};
-  let owner={PARTY:0,OWN:0,HOME:0,VMD:0};
+  let owner={PARTY:0,OWN:0,HOME:0,VMD:0,VMDD:0,VML:0};
   let fixed={LOAN:0,RENT:0,SIP:0,OTHERS:0};
   let oth={};
 
@@ -98,8 +99,13 @@ function renderTable(){
     if(e.billMonth!==sel) return;
 
     tableBody.innerHTML+=`
-      <tr><td>${e.date}</td><td>${e.mode}</td><td>${e.desc}</td>
-      <td>₹${e.amt}</td><td><button onclick="deleteEntry(${i})">❌</button></td></tr>`;
+      <tr>
+        <td>${e.date}</td>
+        <td><span class="badge ${e.mode==='CARD'?'card':'pocket'}">${e.mode}</span></td>
+        <td>${e.desc}</td>
+        <td>₹${e.amt}</td>
+        <td><button onclick="deleteEntry(${i})">❌</button></td>
+      </tr>`;
 
     if(e.type==="Income"){inc+=e.amt;return;}
 
@@ -132,6 +138,8 @@ function renderTable(){
   own.innerText=owner.OWN;
   home.innerText=owner.HOME;
   vmd.innerText=owner.VMD;
+  vmdd.innerText=owner.VMDD;
+  vml.innerText=owner.VML;
 
   loan.innerText=fixed.LOAN;
   rent.innerText=fixed.RENT;
@@ -139,8 +147,6 @@ function renderTable(){
   others.innerText=fixed.OTHERS;
 
   cardTotalSpan.innerText=cardTotal;
-  cardList.innerHTML="";
-  Object.keys(cardBills).forEach(b=>cardList.innerHTML+=`<li>${b}: ₹${cardBills[b]}</li>`);
 
   othList.innerHTML="";
   Object.keys(oth).forEach(n=>othList.innerHTML+=`<li>${n}: ₹${oth[n]}</li>`);
