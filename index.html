@@ -7,76 +7,115 @@
    </head>
    <body>
       <div class="app-container">
-         <h2>💰 Saravana’s Money Tracker</h2>
-         <div class="form">
-            <input type="date" id="date">
-            <select id="type">
-               <option>Income</option>
-               <option>Expense</option>
-            </select>
-            <input id="category" placeholder="ICICI HOME / OTH SURESH / Milk">
-            <input id="amount" type="number" placeholder="Amount">
-            <button onclick="addEntry()">Add Entry</button>
+      <h2>💰 Saravana’s Money Tracker</h2>
+      <div class="form">
+         <input type="date" id="date">
+         <select id="type">
+            <option>Income</option>
+            <option>Expense</option>
+         </select>
+         <input id="category" placeholder="ICICI HOME / OTH SURESH / Milk">
+         <input id="amount" type="number" placeholder="Amount">
+         <button onclick="addEntry()">Add Entry</button>
+      </div>
+      <div class="toolbar">
+         <label>Month:</label>
+         <select id="monthFilter" onchange="renderTable()"></select>
+         <button onclick="toggleTable()">Show / Hide Table</button>
+         <button onclick="mailReport()">Send Mail</button>
+         <button onclick="clearAll()">Clear All</button>
+      </div>
+      <div class="card-dates">
+         ICICI: Bill 18 → Due 05 |
+         HDFC: Bill 16 → Due 05 |
+         AXIS: Bill 23 → Due 10
+      </div>
+      <div class="dashboard">
+         <div class="summary-grid">
+            <!-- LEFT COLUMN -->
+            <div class="sum-col">
+               <table class="info-table">
+                  <tr>
+                     <th>Total Income</th>
+                     <td>₹<span id="incomeSpan">0</span></td>
+                  </tr>
+                  <tr>
+                     <th>Total Expense</th>
+                     <td>₹<span id="expenseSpan">0</span></td>
+                  </tr>
+                  <tr class="rem">
+                     <th>Remaining This Month</th>
+                     <td>₹<span id="remainingSpan">0</span></td>
+                  </tr>
+               </table>
+               <h4>Ownership Wise</h4>
+               <table class="info-table">
+                  <tr>
+                     <th>PARTY</th>
+                     <td>₹<span id="party">0</span></td>
+                  </tr>
+                  <tr>
+                     <th>OWN</th>
+                     <td>₹<span id="own">0</span></td>
+                  </tr>
+                  <tr>
+                     <th>HOME</th>
+                     <td>₹<span id="home">0</span></td>
+                  </tr>
+                  <tr>
+                     <th>VMD</th>
+                     <td>₹<span id="vmd">0</span></td>
+                  </tr>
+                  <tr>
+                     <th>VMDD</th>
+                     <td>₹<span id="vmdd">0</span></td>
+                  </tr>
+                  <tr>
+                     <th>VML</th>
+                     <td>₹<span id="vml">0</span></td>
+                  </tr>
+               </table>
+               <h4>OTH – Friend Wise</h4>
+               <ul id="othList"></ul>
+            </div>
+            <!-- RIGHT COLUMN -->
+            <div class="sum-col">
+               <h4>Total Card Expenses: ₹<span id="cardTotal">0</span></h4>
+               <table class="info-table">
+                  <tr>
+                     <th>ICICI</th>
+                     <td>₹<span id="icici">0</span></td>
+                  </tr>
+                  <tr>
+                     <th>HDFC</th>
+                     <td>₹<span id="hdfc">0</span></td>
+                  </tr>
+                  <tr>
+                     <th>AXIS</th>
+                     <td>₹<span id="axis">0</span></td>
+                  </tr>
+               </table>
+               <h4>Fixed Commitments</h4>
+               <table class="info-table">
+                  <tr>
+                     <th>LOAN</th>
+                     <td>₹<span id="loan">0</span></td>
+                  </tr>
+                  <tr>
+                     <th>RENT</th>
+                     <td>₹<span id="rent">0</span></td>
+                  </tr>
+                  <tr>
+                     <th>SIP</th>
+                     <td>₹<span id="sip">0</span></td>
+                  </tr>
+                  <tr>
+                     <th>OTHERS</th>
+                     <td>₹<span id="others">0</span></td>
+                  </tr>
+               </table>
+            </div>
          </div>
-         <div class="toolbar">
-            <label>Month:</label>
-            <select id="monthFilter" onchange="renderTable()"></select>
-            <button onclick="toggleTable()">Show / Hide Table</button>
-            <button onclick="mailReport()">Send Mail</button>
-            <button onclick="clearAll()">Clear All</button>
-         </div>
-             <div class="card-dates">
-      ICICI: Bill 18 → Due 05 |
-      HDFC: Bill 16 → Due 05 |
-      AXIS: Bill 23 → Due 10
-    </div>
-         <div class="dashboard">
-<div class="summary-grid">
-
-  <!-- LEFT COLUMN -->
-  <div class="sum-col">
-
-    <table class="info-table">
-      <tr><th>Total Income</th><td>₹<span id="incomeSpan">0</span></td></tr>
-      <tr><th>Total Expense</th><td>₹<span id="expenseSpan">0</span></td></tr>
-      <tr class="rem"><th>Remaining This Month</th><td>₹<span id="remainingSpan">0</span></td></tr>
-    </table>
-
-    <h4>Ownership Wise</h4>
-    <table class="info-table">
-      <tr><th>PARTY</th><td>₹<span id="party">0</span></td></tr>
-      <tr><th>OWN</th><td>₹<span id="own">0</span></td></tr>
-      <tr><th>HOME</th><td>₹<span id="home">0</span></td></tr>
-      <tr><th>VMD</th><td>₹<span id="vmd">0</span></td></tr>
-      <tr><th>VMDD</th><td>₹<span id="vmdd">0</span></td></tr>
-      <tr><th>VML</th><td>₹<span id="vml">0</span></td></tr>
-    </table>
-
-    <h4>OTH – Friend Wise</h4>
-    <ul id="othList"></ul>
-  </div>
-
-  <!-- RIGHT COLUMN -->
-  <div class="sum-col">
-
-    <h4>Total Card Expenses: ₹<span id="cardTotal">0</span></h4>
-    <table class="info-table">
-      <tr><th>ICICI</th><td>₹<span id="icici">0</span></td></tr>
-      <tr><th>HDFC</th><td>₹<span id="hdfc">0</span></td></tr>
-      <tr><th>AXIS</th><td>₹<span id="axis">0</span></td></tr>
-    </table>
-
-    <h4>Fixed Commitments</h4>
-    <table class="info-table">
-      <tr><th>LOAN</th><td>₹<span id="loan">0</span></td></tr>
-      <tr><th>RENT</th><td>₹<span id="rent">0</span></td></tr>
-      <tr><th>SIP</th><td>₹<span id="sip">0</span></td></tr>
-      <tr><th>OTHERS</th><td>₹<span id="others">0</span></td></tr>
-    </table>
-  </div>
-
-</div>
-
          <div id="tableBox">
             <table>
                <thead>
