@@ -154,3 +154,21 @@ td button {
 .info-table td{font-weight:600;}
 
 .rem th,.rem td{color:#16a34a;font-weight:700;}
+
+.summary-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:20px;
+  background:#fff;
+  padding:16px;
+  border-radius:12px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.05);
+  margin-bottom:20px;
+}
+
+.summary-left, .summary-right{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
