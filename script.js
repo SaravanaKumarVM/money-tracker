@@ -327,6 +327,5 @@ window.addEventListener("pageshow", () => {
   document.getElementById("tableBox").classList.add("hide-notes");
 });
 
-monthFilter.addEventListener("change", () => renderTable());
 
 
