@@ -300,9 +300,25 @@ function toggleNotes() {
     }
 }
 
-window.onload = () => {
-    data = JSON.parse(localStorage.getItem("moneyData")) || [];
-    buildMonth();
-    renderTable();
-    document.getElementById("tableBox").classList.add("hide-notes");
-};
+//window.onload = () => {
+    //data = JSON.parse(localStorage.getItem("moneyData")) || [];
+    //buildMonth();
+    //renderTable();
+    //document.getElementById("tableBox").classList.add("hide-notes");
+//};
+
+window.addEventListener("pageshow", function () {
+  data = JSON.parse(localStorage.getItem("moneyData")) || [];
+
+  buildMonth();
+
+  const current = getMonthKey(new Date().toISOString().split("T")[0]);
+
+  if ([...monthFilter.options].some(o => o.value === current)) {
+    monthFilter.value = current;   // 🔥 override Chrome restore
+  }
+
+  renderTable();
+  document.getElementById("tableBox").classList.add("hide-notes");
+});
+
