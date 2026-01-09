@@ -66,9 +66,9 @@ h2 {
 
 /* Dashboard cards */
 .dashboard {
-  display: flex;
-  gap: 20px;
+  margin-bottom: 20px;
 }
+
 
 .summary {
   background: #fff;
