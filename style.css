@@ -1,3 +1,4 @@
+/* ========== BASE ========== */
 body {
   font-family: "Segoe UI", system-ui, sans-serif;
   background: #f5f8fc;
@@ -10,20 +11,21 @@ body {
   margin: auto;
 }
 
-/* Title */
 h2 {
   margin-bottom: 12px;
 }
 
-/* Entry form */
-.form, .toolbar {
+/* ========== ENTRY FORM & TOOLBAR ========== */
+.form,
+.toolbar {
   display: flex;
   gap: 10px;
   margin-bottom: 12px;
   flex-wrap: wrap;
 }
 
-.form input, .form select {
+.form input,
+.form select {
   padding: 10px 12px;
   border-radius: 6px;
   border: 1px solid #d9dfe8;
@@ -39,7 +41,6 @@ h2 {
   cursor: pointer;
 }
 
-/* Toolbar buttons */
 .toolbar button {
   background: #fff;
   border: 1px solid #d9dfe8;
@@ -48,39 +49,79 @@ h2 {
   cursor: pointer;
 }
 
-/* Summary strip */
-.summary-strip {
+/* ========== SUMMARY GRID ========== */
+.summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  background: #fff;
+  padding: 18px 20px;
+  border-radius: 14px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+  margin: 18px 0;
+}
+
+.sum-col {
   display: flex;
-  justify-content: space-between;
-  background: #fff;
-  padding: 14px 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.04);
-  margin: 14px 0;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.summary-strip span {
+.sum-col h4 {
+  margin: 14px 0 6px;
+  font-size: 15px;
+  color: #111827;
+}
+
+/* ========== INFO TABLES (SUMMARY TABLES) ========== */
+.info-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 6px;
+}
+
+.info-table th {
+  background: #f1f5ff;
+  padding: 7px 10px;
+  border-radius: 6px 0 0 6px;
+  text-align: left;
+  font-weight: 500;
+  color: #374151;
+  width: 55%;
+  font-size: 13px;
+}
+
+.info-table td {
+  background: #fff;
+  padding: 7px 10px;
+  border-radius: 0 6px 6px 0;
+  text-align: right;
   font-weight: 700;
-  font-size: 18px;
+  color: #111827;
+  font-size: 13px;
 }
 
-/* Dashboard cards */
-.dashboard {
-  margin-bottom: 20px;
+/* Highlight remaining */
+.rem th,
+.rem td {
+  background: #ecfdf5 !important;
+  color: #047857 !important;
+  font-weight: 700;
 }
 
-
-.summary {
-  background: #fff;
-  border-radius: 12px;
-  padding: 16px;
-  width: 320px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+.card-dates {
+  font-size: 12px;
+  color: #6b7280;
+  margin: 6px 0 10px;
 }
 
-/* Table box */
+#othList {
+  padding-left: 18px;
+  margin-top: 6px;
+}
+
+/* ========== LEDGER TABLE ========== */
 #tableBox {
-  flex: 1;
   background: #fff;
   border-radius: 12px;
   padding: 12px;
@@ -105,7 +146,7 @@ td {
   border-bottom: 1px solid #edf1f7;
 }
 
-/* CARD / POCKET badge */
+/* ========== BADGES ========== */
 .badge {
   padding: 4px 10px;
   border-radius: 6px;
@@ -113,10 +154,16 @@ td {
   font-weight: 600;
   color: #fff;
 }
-.badge.card { background: #2e7d32; }
-.badge.pocket { background: #1e40af; }
 
-/* Delete button */
+.badge.card {
+  background: #2e7d32;
+}
+
+.badge.pocket {
+  background: #1e40af;
+}
+
+/* ========== DELETE BUTTON ========== */
 td button {
   background: #ef4444;
   border: none;
@@ -126,49 +173,3 @@ td button {
   height: 28px;
   cursor: pointer;
 }
-
-/* Totals coloring */
-.rem { color: #16a34a; font-weight: 700; }
-
-.card-dates {
-  font-size: 12px;
-  color: #64748b;
-  margin-top: 6px;
-}
-
-.info-table{
-  width:100%;
-  border-collapse:collapse;
-  margin-bottom:10px;
-}
-
-.info-table th,
-.info-table td{
-  text-align:left;
-  padding:6px 4px;
-  border-bottom:1px solid #edf1f7;
-  font-size:13px;
-}
-
-.info-table th{color:#555;}
-.info-table td{font-weight:600;}
-
-.rem th,.rem td{color:#16a34a;font-weight:700;}
-
-.summary-grid{
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap:20px;
-  background:#fff;
-  padding:16px;
-  border-radius:12px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.05);
-  margin-bottom:20px;
-}
-
-.summary-left, .summary-right{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-
