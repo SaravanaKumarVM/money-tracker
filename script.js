@@ -115,12 +115,34 @@ function addEntry() {
     renderTable();
 }
 
-function buildMonth() {
-    const m = [...new Set(data.map(e => e.billMonth))];
-    monthFilter.innerHTML = "";
-    m.forEach(x => monthFilter.appendChild(new Option(x, x)));
-    if (m.length) monthFilter.value = m[m.length - 1];
+//function buildMonth() {
+    //const m = [...new Set(data.map(e => e.billMonth))];
+    //monthFilter.innerHTML = "";
+    //m.forEach(x => monthFilter.appendChild(new Option(x, x)));
+    //if (m.length) monthFilter.value = m[m.length - 1];
+//}
+function buildMonth(){
+  const months = new Set();
+
+  data.forEach(e=>{
+    months.add(e.spendMonth);     // real month first
+    months.add(e.billMonth);      // card months too
+  });
+
+  const list = [...months];
+  monthFilter.innerHTML = "";
+
+  list.forEach(x => monthFilter.appendChild(new Option(x, x)));
+
+  const current = getMonthKey(new Date().toISOString().split("T")[0]);
+
+  if(list.includes(current)){
+    monthFilter.value = current;
+  }else{
+    monthFilter.value = list.sort().reverse()[0];
+  }
 }
+
 
 function renderTable() {
     tableBody.innerHTML = "";
