@@ -221,3 +221,9 @@ td button {
   }
 }
 
+.hide-notes .notes-col,
+.hide-notes td.notes-col {
+  display: none;
+}
+
+
