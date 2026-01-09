@@ -1,28 +1,35 @@
-let data = [];
+let data=[];
 
-const date = document.getElementById("date");
-const type = document.getElementById("type");
-const category = document.getElementById("category");
-const amount = document.getElementById("amount");
-const tableBody = document.getElementById("tableBody");
-const monthFilter = document.getElementById("monthFilter");
+const date=document.getElementById("date");
+const type=document.getElementById("type");
+const category=document.getElementById("category");
+const amount=document.getElementById("amount");
+const tableBody=document.getElementById("tableBody");
+const monthFilter=document.getElementById("monthFilter");
 
-const incomeSpan = document.getElementById("incomeSpan");
-const expenseSpan = document.getElementById("expenseSpan");
-const remainingSpan = document.getElementById("remainingSpan");
+const incomeSpan=document.getElementById("incomeSpan");
+const expenseSpan=document.getElementById("expenseSpan");
+const remainingSpan=document.getElementById("remainingSpan");
 
-const icici = document.getElementById("icici");
-const hdfc = document.getElementById("hdfc");
-const axis = document.getElementById("axis");
+const icici=document.getElementById("icici");
+const hdfc=document.getElementById("hdfc");
+const axis=document.getElementById("axis");
 
-const cardTotalSpan = document.getElementById("cardTotal");
-const cardList = document.getElementById("cardList");
+const party=document.getElementById("party");
+const own=document.getElementById("own");
+const home=document.getElementById("home");
+const vmd=document.getElementById("vmd");
 
-const CARD_RULES = {
-  ICICI:{bill:18},
-  HDFC:{bill:16},
-  AXIS:{bill:23}
-};
+const loan=document.getElementById("loan");
+const rent=document.getElementById("rent");
+const sip=document.getElementById("sip");
+const others=document.getElementById("others");
+
+const othList=document.getElementById("othList");
+const cardTotalSpan=document.getElementById("cardTotal");
+const cardList=document.getElementById("cardList");
+
+const CARD_RULES={ICICI:{bill:18},HDFC:{bill:16},AXIS:{bill:23}};
 
 function normalizeDate(d){
   if(d.split("-")[0].length===4) return d;
@@ -36,10 +43,10 @@ function getMonthKey(d){
     .replace(/\s/g,"").toUpperCase();
 }
 
-function getCardBillMonth(d,bank){
+function getCardBillMonth(d,b){
   const dt=new Date(normalizeDate(d));
-  let m=dt.getMonth(), y=dt.getFullYear();
-  if(dt.getDate()>=CARD_RULES[bank].bill){
+  let m=dt.getMonth(),y=dt.getFullYear();
+  if(dt.getDate()>=CARD_RULES[b].bill){
     m++; if(m>11){m=0;y++;}
   }
   return new Date(y,m,1)
@@ -47,13 +54,13 @@ function getCardBillMonth(d,bank){
     .replace(/\s/g,"").toUpperCase();
 }
 
-function save(){ localStorage.setItem("moneyData",JSON.stringify(data)); }
+function save(){localStorage.setItem("moneyData",JSON.stringify(data));}
 
 function addEntry(){
   if(!date.value||!amount.value) return alert("Enter Date & Amount");
 
-  const words=category.value.toUpperCase().split(" ");
-  const bank=["ICICI","HDFC","AXIS"].find(b=>words.includes(b));
+  const w=category.value.toUpperCase().split(" ");
+  const bank=["ICICI","HDFC","AXIS"].find(b=>w.includes(b));
 
   data.push({
     date:normalizeDate(date.value),
@@ -65,25 +72,25 @@ function addEntry(){
     billMonth:bank?getCardBillMonth(date.value,bank):getMonthKey(date.value)
   });
 
-  setTimeout(()=>{
-    category.value="";amount.value="";
-    date.blur();category.blur();amount.blur();
-  },0);
+  setTimeout(()=>{category.value="";amount.value="";date.blur();category.blur();amount.blur();},0);
 
   save();buildMonth();renderTable();
 }
 
 function buildMonth(){
-  const months=[...new Set(data.map(e=>e.billMonth))];
+  const m=[...new Set(data.map(e=>e.billMonth))];
   monthFilter.innerHTML="";
-  months.forEach(m=>monthFilter.appendChild(new Option(m,m)));
-  if(months.length) monthFilter.value=months[months.length-1];
+  m.forEach(x=>monthFilter.appendChild(new Option(x,x)));
+  if(m.length) monthFilter.value=m[m.length-1];
 }
 
 function renderTable(){
   tableBody.innerHTML="";
-  let inc=0, cardTotal=0, pocketTotal=0;
+  let inc=0,cardTotal=0,pocketTotal=0;
   let cardBills={ICICI:0,HDFC:0,AXIS:0};
+  let owner={PARTY:0,OWN:0,HOME:0,VMD:0};
+  let fixed={LOAN:0,RENT:0,SIP:0,OTHERS:0};
+  let oth={};
 
   const sel=monthFilter.value;
 
@@ -91,15 +98,21 @@ function renderTable(){
     if(e.billMonth!==sel) return;
 
     tableBody.innerHTML+=`
-      <tr>
-        <td>${e.date}</td>
-        <td>${e.mode}</td>
-        <td>${e.desc}</td>
-        <td>₹${e.amt}</td>
-        <td><button onclick="deleteEntry(${i})">❌</button></td>
-      </tr>`;
+      <tr><td>${e.date}</td><td>${e.mode}</td><td>${e.desc}</td>
+      <td>₹${e.amt}</td><td><button onclick="deleteEntry(${i})">❌</button></td></tr>`;
 
-    if(e.type==="Income"){ inc+=e.amt; return; }
+    if(e.type==="Income"){inc+=e.amt;return;}
+
+    const w=e.desc.toUpperCase().split(" ");
+
+    if(w.includes("OTH")){
+      const n=w[w.indexOf("OTH")+1]||"UNKNOWN";
+      oth[n]=(oth[n]||0)+e.amt;
+      return;
+    }
+
+    Object.keys(owner).forEach(k=>w.includes(k)&&(owner[k]+=e.amt));
+    Object.keys(fixed).forEach(k=>w.includes(k)&&(fixed[k]+=e.amt));
 
     if(e.mode==="CARD"){
       cardTotal+=e.amt;
@@ -115,15 +128,26 @@ function renderTable(){
   hdfc.innerText=cardBills.HDFC;
   axis.innerText=cardBills.AXIS;
 
+  party.innerText=owner.PARTY;
+  own.innerText=owner.OWN;
+  home.innerText=owner.HOME;
+  vmd.innerText=owner.VMD;
+
+  loan.innerText=fixed.LOAN;
+  rent.innerText=fixed.RENT;
+  sip.innerText=fixed.SIP;
+  others.innerText=fixed.OTHERS;
+
   cardTotalSpan.innerText=cardTotal;
   cardList.innerHTML="";
-  Object.keys(cardBills).forEach(b=>{
-    cardList.innerHTML+=`<li>${b}: ₹${cardBills[b]}</li>`;
-  });
+  Object.keys(cardBills).forEach(b=>cardList.innerHTML+=`<li>${b}: ₹${cardBills[b]}</li>`);
+
+  othList.innerHTML="";
+  Object.keys(oth).forEach(n=>othList.innerHTML+=`<li>${n}: ₹${oth[n]}</li>`);
 }
 
 function deleteEntry(i){
-  if(!confirm("Delete?")) return;
+  if(!confirm("Delete?"))return;
   data.splice(i,1);
   save();buildMonth();renderTable();
 }
