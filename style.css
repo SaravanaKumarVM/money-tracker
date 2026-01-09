@@ -174,3 +174,50 @@ td button {
   height: 28px;
   cursor: pointer;
 }
+
+@media (max-width: 768px){
+
+  body{
+    padding: 10px;
+  }
+
+  .form,
+  .toolbar{
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .form input,
+  .form select,
+  .form button,
+  .toolbar button{
+    width: 100%;
+  }
+
+  .summary-grid{
+    grid-template-columns: 1fr;
+    padding: 14px;
+  }
+
+  .sum-col{
+    width: 100%;
+  }
+
+  #tableBox{
+    overflow-x: auto;
+  }
+
+  table{
+    font-size: 12px;
+  }
+
+  th, td{
+    padding: 6px;
+  }
+
+  .badge{
+    padding: 3px 6px;
+    font-size: 11px;
+  }
+}
+
