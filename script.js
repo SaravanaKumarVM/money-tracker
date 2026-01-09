@@ -143,18 +143,25 @@ function buildMonth(){
   }
 }
 
+function parseLedgerDate(str){
+  const p = str.split("-");
+  return p[0].length === 4
+    ? new Date(p[0], p[1]-1, p[2])   // YYYY-MM-DD
+    : new Date(p[2], p[1]-1, p[0]);  // DD-MM-YYYY
+}
+
 function sortTableByDate(){
   const tbody = document.getElementById("tableBody");
   const rows = Array.from(tbody.querySelectorAll("tr"));
 
   rows.sort((a,b)=>{
-    const d1 = new Date(normalizeDate(a.cells[0].innerText));
-    const d2 = new Date(normalizeDate(b.cells[0].innerText));
-    return d1 - d2;   // oldest first
+    const d1 = parseLedgerDate(a.cells[0].innerText.trim());
+    const d2 = parseLedgerDate(b.cells[0].innerText.trim());
+    return d1 - d2;
   });
 
-  tbody.innerHTML = "";
-  rows.forEach(r => tbody.appendChild(r));
+  tbody.innerHTML="";
+  rows.forEach(r=>tbody.appendChild(r));
 }
 
 function renderTable() {
