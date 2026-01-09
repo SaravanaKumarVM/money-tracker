@@ -3,6 +3,7 @@ let data=[];
 const date=document.getElementById("date");
 const type=document.getElementById("type");
 const category=document.getElementById("category");
+const notes=document.getElementById("notes");
 const amount=document.getElementById("amount");
 const tableBody=document.getElementById("tableBody");
 const monthFilter=document.getElementById("monthFilter");
@@ -44,16 +45,15 @@ function getMonthKey(d){
     .replace(/\s/g,"").toUpperCase();
 }
 
-/* 🔥 FIXED DUE-MONTH LOGIC */
 function getCardBillMonth(d,b){
   const rule=CARD_RULES[b];
   const dt=new Date(normalizeDate(d));
   let m=dt.getMonth(), y=dt.getFullYear();
 
   if(dt.getDate() <= rule.bill){
-    m++;        // next month
+    m++;
   }else{
-    m += 2;     // month after next
+    m += 2;
   }
 
   if(m>11){ y+=Math.floor(m/12); m%=12; }
@@ -75,14 +75,15 @@ function addEntry(){
     date:normalizeDate(date.value),
     type:type.value,
     desc:category.value,
+    notes:notes.value,
     amt:+amount.value,
     mode:bank?"CARD":"POCKET",
     bank:bank||null,
     billMonth:bank?getCardBillMonth(date.value,bank):getMonthKey(date.value),
-    spendMonth:getMonthKey(date.value)   // 🔥 real spend month
+    spendMonth:getMonthKey(date.value)
   });
 
-  setTimeout(()=>{category.value="";amount.value="";},0);
+  setTimeout(()=>{category.value="";amount.value="";notes.value="";},0);
   save();buildMonth();renderTable();
 }
 
@@ -111,6 +112,7 @@ function renderTable(){
         <td>${e.date}</td>
         <td><span class="badge ${e.mode==='CARD'?'card':'pocket'}">${e.mode}</span></td>
         <td>${e.desc}</td>
+        <td class="notes-col">${e.notes||""}</td>
         <td>₹${e.amt}</td>
         <td><button onclick="deleteEntry(${i})">❌</button></td>
       </tr>`;
@@ -132,7 +134,7 @@ function renderTable(){
       cardTotal+=e.amt;
       cardBills[e.bank]+=e.amt;
     }else{
-      if(e.spendMonth===sel) pocketTotal+=e.amt;  // 🔥 pocket only same month
+      if(e.spendMonth===sel) pocketTotal+=e.amt;
     }
   });
 
@@ -173,7 +175,6 @@ function toggleTable(){
   box.style.display = box.style.display === "none" ? "block" : "none";
 }
 
-
 function clearAll(){
   if(!confirm("This will delete entire money history. Continue?")) return;
   data = [];
@@ -181,7 +182,6 @@ function clearAll(){
   buildMonth();
   renderTable();
 }
-
 
 function mailReport(){
   const sel = monthFilter.value;
@@ -205,15 +205,29 @@ function mailReport(){
 
   body += `--- Ledger ---\n`;
   document.querySelectorAll("#tableBody tr").forEach(r=>{
-    body += `${r.cells[0].innerText} | ${r.cells[1].innerText} | ${r.cells[2].innerText} | ${r.cells[3].innerText}\n`;
+    body += `${r.cells[0].innerText} | ${r.cells[1].innerText} | ${r.cells[2].innerText} | ${r.cells[3].innerText} | ${r.cells[4].innerText}\n`;
   });
 
   window.location.href =
     `mailto:saravanamrkpm@gmail.com?subject=Money Report ${sel}&body=${encodeURIComponent(body)}`;
 }
 
+let notesVisible=false;
+function toggleNotes(){
+  const box=document.getElementById("tableBox");
+  const btn=event.target;
+  notesVisible=!notesVisible;
+  if(notesVisible){
+    box.classList.remove("hide-notes");
+    btn.innerText="Hide Notes";
+  }else{
+    box.classList.add("hide-notes");
+    btn.innerText="Show Notes";
+  }
+}
 
 window.onload=()=>{
   data=JSON.parse(localStorage.getItem("moneyData"))||[];
   buildMonth();renderTable();
+  document.getElementById("tableBox").classList.add("hide-notes");
 };
