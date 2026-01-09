@@ -174,7 +174,7 @@ function renderTable() {
 
     [...data]
   .filter(e => e.billMonth === sel)
-  .sort((a, b) => new Date(a.date) - new Date(b.date))   // 🔥 ascending by date
+    .sort((a, b) => new Date(normalizeDate(a.date)) - new Date(normalizeDate(b.date))) //🔥 ascending by date
   .forEach((e, i) => {
         if (e.billMonth !== sel) return;
 
