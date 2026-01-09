@@ -307,18 +307,26 @@ function toggleNotes() {
     //document.getElementById("tableBox").classList.add("hide-notes");
 //};
 
-window.addEventListener("pageshow", function () {
+window.addEventListener("pageshow", () => {
   data = JSON.parse(localStorage.getItem("moneyData")) || [];
 
   buildMonth();
 
-  const current = getMonthKey(new Date().toISOString().split("T")[0]);
+  const now = new Date();
+  const current =
+    now.toLocaleString("en",{month:"short",year:"numeric"})
+       .replace(/\s/g,"")
+       .toUpperCase();
 
-  if ([...monthFilter.options].some(o => o.value === current)) {
-    monthFilter.value = current;   // 🔥 override Chrome restore
-  }
+  // 🔥 force reset without triggering change
+  monthFilter.removeEventListener("change", renderTable);
+  monthFilter.value = current;
+  monthFilter.addEventListener("change", () => renderTable());
 
   renderTable();
   document.getElementById("tableBox").classList.add("hide-notes");
 });
+
+monthFilter.addEventListener("change", () => renderTable());
+
 
