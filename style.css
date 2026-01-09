@@ -226,4 +226,6 @@ td button {
   display: none;
 }
 
-
+.badge.income{
+  background:#059669;   /* calm green */
+}
