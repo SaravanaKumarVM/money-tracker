@@ -168,6 +168,51 @@ function deleteEntry(i){
   save();buildMonth();renderTable();
 }
 
+function toggleTable(){
+  const box = document.getElementById("tableBox");
+  box.style.display = box.style.display === "none" ? "block" : "none";
+}
+
+
+function clearAll(){
+  if(!confirm("This will delete entire money history. Continue?")) return;
+  data = [];
+  localStorage.removeItem("moneyData");
+  buildMonth();
+  renderTable();
+}
+
+
+function mailReport(){
+  const sel = monthFilter.value;
+
+  let body = `Saravana Money Tracker Report - ${sel}\n\n`;
+
+  body += `Total Income: ₹${incomeSpan.innerText}\n`;
+  body += `Total Expense: ₹${expenseSpan.innerText}\n`;
+  body += `Remaining: ₹${remainingSpan.innerText}\n\n`;
+
+  body += `--- Card Expenses ---\n`;
+  body += `ICICI: ₹${icici.innerText}\n`;
+  body += `HDFC: ₹${hdfc.innerText}\n`;
+  body += `AXIS: ₹${axis.innerText}\n\n`;
+
+  body += `--- Ownership ---\n`;
+  body += `PARTY: ₹${party.innerText}\nOWN: ₹${own.innerText}\nHOME: ₹${home.innerText}\nVMD: ₹${vmd.innerText}\nVMDD: ₹${vmdd.innerText}\nVML: ₹${vml.innerText}\n\n`;
+
+  body += `--- Fixed Commitments ---\n`;
+  body += `LOAN: ₹${loan.innerText}\nRENT: ₹${rent.innerText}\nSIP: ₹${sip.innerText}\nOTHERS: ₹${others.innerText}\n\n`;
+
+  body += `--- Ledger ---\n`;
+  document.querySelectorAll("#tableBody tr").forEach(r=>{
+    body += `${r.cells[0].innerText} | ${r.cells[1].innerText} | ${r.cells[2].innerText} | ${r.cells[3].innerText}\n`;
+  });
+
+  window.location.href =
+    `mailto:saravanamrkpm@gmail.com?subject=Money Report ${sel}&body=${encodeURIComponent(body)}`;
+}
+
+
 window.onload=()=>{
   data=JSON.parse(localStorage.getItem("moneyData"))||[];
   buildMonth();renderTable();
