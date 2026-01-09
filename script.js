@@ -179,8 +179,6 @@ function renderTable() {
 <tr>
   <td>${e.date}</td>
   
-// OLD LOGIC — was marking everything as CARD or POCKET
-// <td><span class="badge ${e.mode==='CARD'?'card':'pocket'}">${e.mode}</span></td>
 <td>
   ${
     e.type === "Income"
