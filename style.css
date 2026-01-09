@@ -229,3 +229,7 @@ td button {
 .badge.income{
   background:#059669;   /* calm green */
 }
+
+.hide-table {
+    display: none !important;
+}
