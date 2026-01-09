@@ -172,13 +172,18 @@ function renderTable() {
 
     const sel = monthFilter.value;
 
-    [...data]
-  .filter(e => e.billMonth === sel)
-    .sort((a, b) => new Date(normalizeDate(a.date)) - new Date(normalizeDate(b.date))) //🔥 ascending by date
-  .forEach((e, i) => {
-        if (e.billMonth !== sel) return;
+  [...data]
+  .map((e, idx) => ({ e, idx }))                // keep original index
+  .filter(x => x.e.billMonth === sel)
+  .sort((a, b) =>
+     new Date(normalizeDate(a.e.date)) - new Date(normalizeDate(b.e.date))
+  )
+  .forEach(x => {
 
-        tableBody.innerHTML += `
+    const e = x.e;
+    const i = x.idx;    // 👈 original index
+
+    tableBody.innerHTML += `
 <tr>
   <td>${e.date}</td>
   <td>
@@ -193,6 +198,7 @@ function renderTable() {
   <td><button onclick="deleteEntry(${i})">❌</button></td>
   <td class="notes-col">${e.notes||""}</td>
 </tr>`;
+});
 
         if (e.type === "Income") {
             inc += e.amt;
