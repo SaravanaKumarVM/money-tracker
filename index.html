@@ -24,7 +24,6 @@
          <select id="monthFilter" onchange="renderTable()"></select>
          <button onclick="toggleTable()">Show / Hide Table</button>
          <button onclick="mailReport()">Send Mail</button>
-         <button onclick="clearAll()">Clear All</button>
          <button onclick="toggleNotes()">Show Notes</button>
       </div>
       <div class="card-dates">
@@ -132,6 +131,7 @@
                </thead>
                <tbody id="tableBody"></tbody>
             </table>
+            <button onclick="clearAll()">Clear All</button>
          </div>
       </div>
       <script src="script.js"></script>
