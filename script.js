@@ -1,6 +1,5 @@
 let data = [];
 
-/* -------- DOM -------- */
 const date = document.getElementById("date");
 const type = document.getElementById("type");
 const category = document.getElementById("category");
@@ -13,25 +12,18 @@ const expenseSpan = document.getElementById("expenseSpan");
 const remainingSpan = document.getElementById("remainingSpan");
 
 const icici = document.getElementById("icici");
-const axis = document.getElementById("axis");
 const hdfc = document.getElementById("hdfc");
-
-const loan = document.getElementById("loan");
-const rent = document.getElementById("rent");
-const sip = document.getElementById("sip");
-const others = document.getElementById("others");
+const axis = document.getElementById("axis");
 
 const cardTotalSpan = document.getElementById("cardTotal");
 const cardList = document.getElementById("cardList");
 
-/* -------- Card Rules -------- */
 const CARD_RULES = {
-  ICICI:{bill:18,due:5},
-  HDFC:{bill:16,due:5},
-  AXIS:{bill:23,due:10}
+  ICICI:{bill:18},
+  HDFC:{bill:16},
+  AXIS:{bill:23}
 };
 
-/* -------- Helpers -------- */
 function normalizeDate(d){
   if(d.split("-")[0].length===4) return d;
   const p=d.split("-");
@@ -57,7 +49,6 @@ function getCardBillMonth(d,bank){
 
 function save(){ localStorage.setItem("moneyData",JSON.stringify(data)); }
 
-/* -------- Add Entry -------- */
 function addEntry(){
   if(!date.value||!amount.value) return alert("Enter Date & Amount");
 
@@ -82,17 +73,13 @@ function addEntry(){
   save();buildMonth();renderTable();
 }
 
-/* -------- Month Dropdown -------- */
 function buildMonth(){
-  const cur=monthFilter.value||"ALL";
-  const m=[...new Set(data.map(e=>e.billMonth))];
+  const months=[...new Set(data.map(e=>e.billMonth))];
   monthFilter.innerHTML="";
-  monthFilter.appendChild(new Option("ALL","ALL"));
-  m.forEach(x=>monthFilter.appendChild(new Option(x,x)));
-  monthFilter.value=m.includes(cur)?cur:"ALL";
+  months.forEach(m=>monthFilter.appendChild(new Option(m,m)));
+  if(months.length) monthFilter.value=months[months.length-1];
 }
 
-/* -------- Render -------- */
 function renderTable(){
   tableBody.innerHTML="";
   let inc=0, cardTotal=0, pocketTotal=0;
@@ -101,7 +88,7 @@ function renderTable(){
   const sel=monthFilter.value;
 
   data.forEach((e,i)=>{
-    if(sel!=="ALL" && e.billMonth!==sel) return;
+    if(e.billMonth!==sel) return;
 
     tableBody.innerHTML+=`
       <tr>
@@ -117,18 +104,12 @@ function renderTable(){
     if(e.mode==="CARD"){
       cardTotal+=e.amt;
       cardBills[e.bank]+=e.amt;
-    }else{
-      pocketTotal+=e.amt;
-    }
+    }else pocketTotal+=e.amt;
   });
 
   incomeSpan.innerText=inc;
   expenseSpan.innerText=cardTotal+pocketTotal;
-
-  const fixedTotal=
-    +loan.innerText + +rent.innerText + +sip.innerText + +others.innerText;
-
-  remainingSpan.innerText = inc - fixedTotal - cardTotal - pocketTotal;
+  remainingSpan.innerText=inc-cardTotal-pocketTotal;
 
   icici.innerText=cardBills.ICICI;
   hdfc.innerText=cardBills.HDFC;
@@ -141,14 +122,12 @@ function renderTable(){
   });
 }
 
-/* -------- Delete -------- */
 function deleteEntry(i){
   if(!confirm("Delete?")) return;
   data.splice(i,1);
   save();buildMonth();renderTable();
 }
 
-/* -------- Init -------- */
 window.onload=()=>{
   data=JSON.parse(localStorage.getItem("moneyData"))||[];
   buildMonth();renderTable();
