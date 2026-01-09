@@ -135,3 +135,22 @@ td button {
   color: #64748b;
   margin-top: 6px;
 }
+
+.info-table{
+  width:100%;
+  border-collapse:collapse;
+  margin-bottom:10px;
+}
+
+.info-table th,
+.info-table td{
+  text-align:left;
+  padding:6px 4px;
+  border-bottom:1px solid #edf1f7;
+  font-size:13px;
+}
+
+.info-table th{color:#555;}
+.info-table td{font-weight:600;}
+
+.rem th,.rem td{color:#16a34a;font-weight:700;}
