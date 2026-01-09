@@ -143,6 +143,19 @@ function buildMonth(){
   }
 }
 
+function sortTableByDate(){
+  const tbody = document.getElementById("tableBody");
+  const rows = Array.from(tbody.querySelectorAll("tr"));
+
+  rows.sort((a,b)=>{
+    const d1 = new Date(normalizeDate(a.cells[0].innerText));
+    const d2 = new Date(normalizeDate(b.cells[0].innerText));
+    return d1 - d2;   // oldest first
+  });
+
+  tbody.innerHTML = "";
+  rows.forEach(r => tbody.appendChild(r));
+}
 
 function renderTable() {
     tableBody.innerHTML = "";
@@ -239,6 +252,8 @@ data.forEach((e, i) => {
 
     othList.innerHTML = "";
     Object.keys(oth).forEach(n => othList.innerHTML += `<li>${n}: ₹${oth[n]}</li>`);
+
+sortTableByDate();
 }
 
 function deleteEntry(i) {
