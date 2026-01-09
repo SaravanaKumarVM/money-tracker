@@ -178,8 +178,10 @@ function renderTable() {
         tableBody.innerHTML += `
 <tr>
   <td>${e.date}</td>
-  //<td><span class="badge ${e.mode==='CARD'?'card':'pocket'}">${e.mode}</span></td>
-  <td>
+  
+// OLD LOGIC — was marking everything as CARD or POCKET
+// <td><span class="badge ${e.mode==='CARD'?'card':'pocket'}">${e.mode}</span></td>
+<td>
   ${
     e.type === "Income"
       ? `<span class="badge income">INCOME</span>`
