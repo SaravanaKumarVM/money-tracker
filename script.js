@@ -172,7 +172,10 @@ function renderTable() {
 
     const sel = monthFilter.value;
 
-    data.forEach((e, i) => {
+    [...data]
+  .filter(e => e.billMonth === sel)
+  .sort((a, b) => new Date(a.date) - new Date(b.date))   // 🔥 ascending by date
+  .forEach((e, i) => {
         if (e.billMonth !== sel) return;
 
         tableBody.innerHTML += `
