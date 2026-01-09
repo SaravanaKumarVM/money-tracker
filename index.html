@@ -16,7 +16,7 @@
       <option>Income</option>
       <option>Expense</option>
     </select>
-    <input id="category" placeholder="ICICI HOME / Milk / etc">
+    <input id="category" placeholder="ICICI HOME / OTH SURESH / Milk">
     <input id="amount" type="number" placeholder="Amount">
     <button onclick="addEntry()">Add Entry</button>
   </div>
@@ -24,7 +24,6 @@
   <div class="toolbar">
     <label>Month:</label>
     <select id="monthFilter" onchange="renderTable()"></select>
-    <button onclick="toggleTable()">Show / Hide</button>
   </div>
 
   <div class="dashboard">
@@ -39,10 +38,25 @@
       <h3>💳 Total Card Expenses: ₹<span id="cardTotal">0</span></h3>
       <ul id="cardList"></ul>
 
-      <h3>🏦 Bank Wise Bills</h3>
+      <h3>🏦 Bank Wise</h3>
       <p>ICICI: ₹<span id="icici">0</span></p>
       <p>HDFC: ₹<span id="hdfc">0</span></p>
       <p>AXIS: ₹<span id="axis">0</span></p>
+
+      <h3>👤 Ownership Wise</h3>
+      <p>PARTY: ₹<span id="party">0</span></p>
+      <p>OWN: ₹<span id="own">0</span></p>
+      <p>HOME: ₹<span id="home">0</span></p>
+      <p>VMD: ₹<span id="vmd">0</span></p>
+
+      <h3>💳 Fixed Commitments</h3>
+      <p>LOAN: ₹<span id="loan">0</span></p>
+      <p>RENT: ₹<span id="rent">0</span></p>
+      <p>SIP: ₹<span id="sip">0</span></p>
+      <p>OTHERS: ₹<span id="others">0</span></p>
+
+      <h3>👥 OTH – Friend Wise</h3>
+      <ul id="othList"></ul>
     </div>
 
     <div id="tableBox">
