@@ -178,13 +178,12 @@ function renderTable() {
         tableBody.innerHTML += `
 <tr>
   <td>${e.date}</td>
-  
-<td>
-  ${
-    e.type === "Income"
-      ? `<span class="badge income">INCOME</span>`
-      : `<span class="badge ${e.mode==='CARD'?'card':'pocket'}">${e.mode}</span>`
-  }
+  <td>
+    ${
+      e.type === "Income"
+        ? `<span class="badge income">INCOME</span>`
+        : `<span class="badge ${e.mode==='CARD'?'card':'pocket'}">${e.mode}</span>`
+    }
   </td>
   <td>${e.desc}</td>
   <td>₹${e.amt}</td>
