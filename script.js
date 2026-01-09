@@ -1,5 +1,3 @@
-const IS_LEDGER_TAB = location.pathname.includes("table.html");
-
 let data = [];
 
 const date = document.getElementById("date");
@@ -105,22 +103,10 @@ function clearAll() {
   renderTable();
 }
 
-// function toggleTable() {
-//   const t = document.getElementById("tableBox");
-//   t.style.display = t.style.display === "none" ? "block" : "none";
-// }
-
-function toggleTable(){
-  const btn = document.getElementById("toggleBtn");
-
-  if(btn.innerText === "Show"){
-    window.open("table.html","_blank");
-    // btn.innerText = "Hide";
-  }else{
-    btn.innerText = "Show";
-  }
+function toggleTable() {
+  const t = document.getElementById("tableBox");
+  t.style.display = t.style.display === "none" ? "block" : "none";
 }
-
 
 /* ---------- Export ---------- */
 function exportData(){
@@ -197,8 +183,6 @@ function importBackup(file) {
 
 /* ---------- Render ---------- */
 function renderTable() {
-  if(!tableBody) return;
-
   tableBody.innerHTML = "";
 
   let inc = 0,
@@ -208,7 +192,7 @@ function renderTable() {
   let fixed = { LOAN: 0, RENT: 0, SIP: 0, OTHERS: 0 };
   let oth = {};
 
-  const sel = IS_LEDGER_TAB ? "ALL" : monthFilter.value;
+  const sel = monthFilter.value;
 
   data.forEach((e, i) => {
     if (sel !== "ALL" && getMonthKey(e.date) !== sel) return;
@@ -222,7 +206,7 @@ function renderTable() {
         <td><button onclick="deleteEntry(${i})">❌</button></td>
       </tr>`;
   
-    const w = (e.desc || "").toUpperCase().split(" ");
+    const w = e.desc.toUpperCase().split(" ");
   
     // ---------- INCOME ----------
     if (e.type === "Income") {
@@ -243,9 +227,7 @@ function renderTable() {
     Object.keys(bank).forEach(k => w.includes(k) && (bank[k] += e.amt));
     Object.keys(owner).forEach(k => w.includes(k) && (owner[k] += e.amt));
     Object.keys(fixed).forEach(k => w.includes(k) && (fixed[k] += e.amt));
-  } 
-    if(IS_LEDGER_TAB) return;
-    );
+  });
 
 
   incomeSpan.innerText = inc;
