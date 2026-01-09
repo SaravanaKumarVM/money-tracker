@@ -1,14 +1,137 @@
-body{font-family:Arial;background:#eef6fb;margin:0;padding:10px}
-.app-container{max-width:1200px;margin:auto}
-.form,.toolbar{display:flex;gap:8px;margin-bottom:10px}
-.form input,.form select{padding:6px}
-.dashboard{display:flex;gap:10px}
-.summary{background:#fff;padding:10px;border-radius:8px;width:260px}
-.rem{color:green;font-weight:bold}
-.badge{padding:4px 8px;border-radius:6px;color:#fff;font-size:12px}
-.badge.card{background:#2e7d32}
-.badge.pocket{background:#1565c0}
-table{width:100%;background:#fff;border-radius:8px}
-th,td{padding:8px;text-align:left}
-button{cursor:pointer}
-.card-dates{font-size:12px;color:#555}
+body {
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: #f5f8fc;
+  margin: 0;
+  padding: 20px;
+}
+
+.app-container {
+  max-width: 1300px;
+  margin: auto;
+}
+
+/* Title */
+h2 {
+  margin-bottom: 12px;
+}
+
+/* Entry form */
+.form, .toolbar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.form input, .form select {
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid #d9dfe8;
+  font-size: 14px;
+}
+
+.form button {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Toolbar buttons */
+.toolbar button {
+  background: #fff;
+  border: 1px solid #d9dfe8;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Summary strip */
+.summary-strip {
+  display: flex;
+  justify-content: space-between;
+  background: #fff;
+  padding: 14px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+  margin: 14px 0;
+}
+
+.summary-strip span {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+/* Dashboard cards */
+.dashboard {
+  display: flex;
+  gap: 20px;
+}
+
+.summary {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  width: 320px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* Table box */
+#tableBox {
+  flex: 1;
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  background: #eef3ff;
+  font-weight: 600;
+  padding: 10px;
+  text-align: left;
+  border-radius: 6px;
+}
+
+td {
+  padding: 10px;
+  border-bottom: 1px solid #edf1f7;
+}
+
+/* CARD / POCKET badge */
+.badge {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+}
+.badge.card { background: #2e7d32; }
+.badge.pocket { background: #1e40af; }
+
+/* Delete button */
+td button {
+  background: #ef4444;
+  border: none;
+  color: #fff;
+  border-radius: 6px;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+}
+
+/* Totals coloring */
+.rem { color: #16a34a; font-weight: 700; }
+
+.card-dates {
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 6px;
+}
