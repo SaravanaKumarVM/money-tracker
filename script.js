@@ -271,7 +271,7 @@ function deleteEntry(i) {
     renderTable();
 }
 
-let tableVisible = true;
+let tableVisible = false;
 
 function toggleTable(event) {
     const box = document.getElementById("tableBox");
