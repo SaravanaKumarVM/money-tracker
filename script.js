@@ -44,12 +44,20 @@ function getMonthKey(d){
     .replace(/\s/g,"").toUpperCase();
 }
 
+/* 🔥 FIXED DUE-MONTH LOGIC */
 function getCardBillMonth(d,b){
+  const rule=CARD_RULES[b];
   const dt=new Date(normalizeDate(d));
-  let m=dt.getMonth(),y=dt.getFullYear();
-  if(dt.getDate()>=CARD_RULES[b].bill){
-    m++; if(m>11){m=0;y++;}
+  let m=dt.getMonth(), y=dt.getFullYear();
+
+  if(dt.getDate() <= rule.bill){
+    m++;        // next month
+  }else{
+    m += 2;     // month after next
   }
+
+  if(m>11){ y+=Math.floor(m/12); m%=12; }
+
   return new Date(y,m,1)
     .toLocaleString("en",{month:"short",year:"numeric"})
     .replace(/\s/g,"").toUpperCase();
@@ -70,11 +78,11 @@ function addEntry(){
     amt:+amount.value,
     mode:bank?"CARD":"POCKET",
     bank:bank||null,
-    billMonth:bank?getCardBillMonth(date.value,bank):getMonthKey(date.value)
+    billMonth:bank?getCardBillMonth(date.value,bank):getMonthKey(date.value),
+    spendMonth:getMonthKey(date.value)   // 🔥 real spend month
   });
 
   setTimeout(()=>{category.value="";amount.value="";},0);
-
   save();buildMonth();renderTable();
 }
 
@@ -107,7 +115,7 @@ function renderTable(){
         <td><button onclick="deleteEntry(${i})">❌</button></td>
       </tr>`;
 
-    if(e.type==="Income"){inc+=e.amt;return;}
+    if(e.type==="Income"){ inc+=e.amt; return; }
 
     const w=e.desc.toUpperCase().split(" ");
 
@@ -123,7 +131,9 @@ function renderTable(){
     if(e.mode==="CARD"){
       cardTotal+=e.amt;
       cardBills[e.bank]+=e.amt;
-    }else pocketTotal+=e.amt;
+    }else{
+      if(e.spendMonth===sel) pocketTotal+=e.amt;  // 🔥 pocket only same month
+    }
   });
 
   incomeSpan.innerText=inc;
