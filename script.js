@@ -271,9 +271,21 @@ function deleteEntry(i) {
     renderTable();
 }
 
-function toggleTable() {
+let tableVisible = true;
+
+function toggleTable(event) {
     const box = document.getElementById("tableBox");
-    box.style.display = box.style.display === "none" ? "block" : "none";
+    const btn = event.target;
+
+    tableVisible = !tableVisible;
+
+    if (tableVisible) {
+        box.classList.remove("hide-table");
+        btn.innerText = "Hide Table";
+    } else {
+        box.classList.add("hide-table");
+        btn.innerText = "Show Table";
+    }
 }
 
 function clearAll() {
